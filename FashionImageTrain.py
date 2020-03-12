@@ -36,7 +36,7 @@ import sys
 
 
 
-arg_names = ['filename','model', 'epochs']
+arg_names = ['filename','model', 'epochs','batch']
 args = dict(zip(arg_names, sys.argv))
 
 if(args.get('model') is not None):
@@ -49,8 +49,15 @@ if args.get('epochs') is not None:
 else:
     epochs = 20
 
+if(args.get('batch') is not None):
+    batch = int(args['batch'])
+else:
+    batch = 64
+
+
 print("Building model " + modelT)
 print("For " + str(epochs) + " epochs.")
+print("Batch size " + str(batch))
 
 if(modelT=='master'):
     from MasterCategoryModel import Master
@@ -114,7 +121,7 @@ train_generator = train_datagen.flow_from_dataframe(
     x_col="filepath",
     y_col="subCategory",
     target_size=(224, 224),
-    batch_size=1,
+    batch_size=batch,
     class_mode='categorical')
 val_generator = test_datagen.flow_from_dataframe(
     dataframe=val_df,
@@ -122,7 +129,7 @@ val_generator = test_datagen.flow_from_dataframe(
     x_col="filepath",
     y_col="subCategory",
     target_size=(224, 224),
-    batch_size=1,
+    batch_size=batch,
     class_mode='categorical')
 test_generator = test_datagen.flow_from_dataframe(
     dataframe=test_df,
@@ -130,7 +137,7 @@ test_generator = test_datagen.flow_from_dataframe(
     x_col="filepath",
     y_col="subCategory",
     target_size=(224, 224),
-    batch_size=1,
+    batch_size=batch,
     class_mode='categorical')
 
 # Training the model for 10 epochs

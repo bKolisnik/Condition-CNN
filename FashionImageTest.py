@@ -1,7 +1,7 @@
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import sys
-arg_names = ['filename','model']
+arg_names = ['filename','model','batch']
 args = dict(zip(arg_names, sys.argv))
 
 if(args.get('model') is not None):
@@ -9,10 +9,13 @@ if(args.get('model') is not None):
 else:
     modelT = 'master'
 
-
+if(args.get('batch') is not None):
+    batch = int(args['batch'])
+else:
+    batch = 64
 
 print("Testing model " + modelT)
-
+print("Batch size " + str(batch))
 
 if(modelT=='master'):
     from MasterCategoryModel import Master
@@ -48,7 +51,7 @@ test_generator = test_datagen.flow_from_dataframe(
         x_col="filepath",
         y_col="subCategory",
         target_size=(224, 224),
-        batch_size=1,
+        batch_size=batch,
         class_mode='categorical')
 
 
