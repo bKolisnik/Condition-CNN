@@ -74,9 +74,9 @@ elif(modelT=='article'):
 
 
 
-train_df = pd.read_csv("kaggle_fashion_product_train.csv").loc[0:1000, :]
-val_df = pd.read_csv("kaggle_fashion_product_validation.csv").loc[3000:3600, :]
-test_df = pd.read_csv("kaggle_fashion_product_test.csv").loc[0:1000, :]
+train_df = pd.read_csv("kaggle_fashion_product_train.csv")
+val_df = pd.read_csv("kaggle_fashion_product_validation.csv")
+test_df = pd.read_csv("kaggle_fashion_product_test.csv")
 
 
 def check_files_existence(directory, df):
