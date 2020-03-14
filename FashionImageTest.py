@@ -40,7 +40,7 @@ elif modelT=='articleType':
 
 # Compiling the model
 #model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
-
+test_df = pd.read_csv("kaggle_fashion_product_test.csv")
 
 
 
