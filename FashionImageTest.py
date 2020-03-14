@@ -17,23 +17,23 @@ else:
 print("Testing model " + modelT)
 print("Batch size " + str(batch))
 
-if(modelT=='master'):
+if(modelT=='masterCategory'):
     from MasterCategoryModel import Master
     model = Master().model
 
-elif(modelT=='sub'):
+elif(modelT=='subCategory'):
     from SubCategoryModel import SubCategory
     model = SubCategory().model
-elif(modelT=='article'):
+elif(modelT=='articleType'):
     #model is articleType
     from ArticleTypeModel import ArticleType
     model = ArticleType().model
 
-if modelT=='master':
+if modelT=='masterCategory':
     model.load_weights("Fashion_pretrain_resnet50_MasterCategory.h5")
-elif modelT=='sub':
+elif modelT=='subCategory':
     model.load_weights("Fashion_pretrain_resnet50_SubCategory.h5")
-elif modelT=='article':
+elif modelT=='articleType':
     model.load_weights("Fashion_pretrain_resnet50_ArticleType.h5")
 #load the weights
 
@@ -56,7 +56,7 @@ test_generator = test_datagen.flow_from_dataframe(
 
 
 print("Test generator n",test_generator.n)
-print("Test geenrator batch size",test_generator.batch_size)
+print("Test generator batch size",test_generator.batch_size)
 STEP_SIZE_TEST=test_generator.n//test_generator.batch_size
 print(model.evaluate_generator(generator=test_generator,
         steps=STEP_SIZE_TEST))

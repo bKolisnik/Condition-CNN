@@ -42,7 +42,7 @@ args = dict(zip(arg_names, sys.argv))
 if(args.get('model') is not None):
     modelT=args['model']
 else:
-    modelT = 'master'
+    modelT = 'masterCategory'
 
 if args.get('epochs') is not None:
     epochs = int(args['epochs'])
@@ -59,14 +59,14 @@ print("Building model " + modelT)
 print("For " + str(epochs) + " epochs.")
 print("Batch size " + str(batch))
 
-if(modelT=='master'):
+if(modelT=='masterCategory'):
     from MasterCategoryModel import Master
     model = Master().model
 
-elif(modelT=='sub'):
+elif(modelT=='subCategory'):
     from SubCategoryModel import SubCategory
     model = SubCategory().model
-elif(modelT=='article'):
+elif(modelT=='articleType'):
     #model is articleType
     from ArticleTypeModel import ArticleType
     model = ArticleType().model
@@ -119,7 +119,7 @@ train_generator = train_datagen.flow_from_dataframe(
     dataframe=train_df,
     directory=direc,
     x_col="filepath",
-    y_col="subCategory",
+    y_col=modelT,
     target_size=(224, 224),
     batch_size=batch,
     class_mode='categorical')
@@ -127,7 +127,7 @@ val_generator = test_datagen.flow_from_dataframe(
     dataframe=val_df,
     directory=direc,
     x_col="filepath",
-    y_col="subCategory",
+    y_col=modelT,
     target_size=(224, 224),
     batch_size=batch,
     class_mode='categorical')
@@ -135,7 +135,7 @@ test_generator = test_datagen.flow_from_dataframe(
     dataframe=test_df,
     directory=direc,
     x_col="filepath",
-    y_col="subCategory",
+    y_col=modelT,
     target_size=(224, 224),
     batch_size=batch,
     class_mode='categorical')
@@ -157,16 +157,16 @@ try:
 except ValueError as v:
     print(v)
 # Saving the weights in the current directory
-if modelT=='master':
+if modelT=='masterCategory':
     model.save_weights("Fashion_pretrain_resnet50_MasterCategory.h5")
-elif modelT=='sub':
+elif modelT=='subCategory':
     model.save_weights("Fashion_pretrain_resnet50_SubCategory.h5")
-elif modelT=='article':
+elif modelT=='articleType':
     model.save_weights("Fashion_pretrain_resnet50_ArticleType.h5")
 
 try:
     print("Test generator n", test_generator.n)
-    print("Test geenrator batch size", test_generator.batch_size)
+    print("Test generator batch size", test_generator.batch_size)
     STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
     model.evaluate_generator(generator=test_generator,
                              steps=STEP_SIZE_TEST)
