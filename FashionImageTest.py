@@ -3,6 +3,8 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import sys
 import numpy as np  # linear algebra
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
+
+direc = '../data/fashion-dataset/images/'
 arg_names = ['filename','model','batch']
 args = dict(zip(arg_names, sys.argv))
 
