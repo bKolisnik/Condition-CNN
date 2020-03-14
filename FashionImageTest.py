@@ -7,7 +7,7 @@ args = dict(zip(arg_names, sys.argv))
 if(args.get('model') is not None):
     modelT=args['model']
 else:
-    modelT = 'master'
+    modelT = 'masterCategory'
 
 if(args.get('batch') is not None):
     batch = int(args['batch'])
