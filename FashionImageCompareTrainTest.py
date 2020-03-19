@@ -96,6 +96,7 @@ def save_predictions():
 
 #predict returns the 2d array where each sample returns a vector of predictions.
 train_pred = np.load('train_pred.npy')
+np.savetxt("train_pred_max.txt",np.argmax(train_pred,axis=1))
 train_labels = train_df[modelT].values
 
 #label_map has class name keys and index of the output vector as values
