@@ -3,7 +3,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import sys
 import numpy as np  # linear algebra
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
-
+from tensorflow.math import confusion_matrix
 '''This module takes in a trained model and compares it's predictions on each dataset
 then output confusion matrices for each dataset so you can see why the model is performing well on train but poorly on test.'''
 
@@ -84,15 +84,15 @@ val_generator = test_datagen.flow_from_dataframe(
 train_pred = model.predict(x=train_generator)
 train_labels = train_df[modelT].values
 print("Train Confusion Matrix")
-print(tf.math.confusion_matrix(train_labels,train_pred))
+print(confusion_matrix(train_labels,train_pred))
 
 
 test_pred = model.predict(x=test_generator)
 test_labels = test_df[modelT].values
 print("Test Confusion Matrix")
-print(tf.math.confusion_matrix(train_labels,train_pred))
+print(confusion_matrix(train_labels,train_pred))
 
 val_pred = model.predict(x=val_generator)
 val_labels = val_df[modelT].values
 print("Validation Confusion Matrix")
-print(tf.math.confusion_matrix(train_labels,train_pred))
+print(confusion_matrix(train_labels,train_pred))
