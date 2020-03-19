@@ -77,26 +77,22 @@ val_generator = test_datagen.flow_from_dataframe(
     class_mode='categorical')
 
 
-STEP_SIZE_TEST=test_generator.n//test_generator.batch_size
-print(model.evaluate(x=test_generator,
-        steps=STEP_SIZE_TEST))
 
 #do the predictions
 
 #returns a numpy array of predictions
-test_pred = model.predict(x=test_generator)
 train_pred = model.predict(x=train_generator)
-val_pred = model.predict(x=val_generator)
-
-test_labels = test_df[modelT].values
 train_labels = train_df[modelT].values
-val_labels = val_df[modelT].values
-
 print("Train Confusion Matrix")
 print(tf.math.confusion_matrix(train_labels,train_pred))
 
+
+test_pred = model.predict(x=test_generator)
+test_labels = test_df[modelT].values
 print("Test Confusion Matrix")
 print(tf.math.confusion_matrix(train_labels,train_pred))
 
+val_pred = model.predict(x=val_generator)
+val_labels = val_df[modelT].values
 print("Validation Confusion Matrix")
 print(tf.math.confusion_matrix(train_labels,train_pred))
