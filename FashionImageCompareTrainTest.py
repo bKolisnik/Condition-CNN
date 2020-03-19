@@ -91,11 +91,12 @@ def save_predictions():
     val_pred = model.predict(x=val_generator)
     np.save('val_pred.npy', val_pred)
 
-save_predictions()
+#save_predictions()
 
 
 #returns a numpy array of predictions
 train_pred = np.load('train_pred.npy')
+print(train_pred.shape)
 train_labels = train_df[modelT].values
 u = np.unique(train_labels)
 data_dict={}
