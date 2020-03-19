@@ -94,10 +94,12 @@ def save_predictions():
 #save_predictions()
 
 
-#returns a numpy array of predictions
+#predict returns the 2d array where each sample returns a vector of predictions.
 train_pred = np.load('train_pred.npy')
-print(train_pred[0])
 train_labels = train_df[modelT].values
+
+train_label_map = train_generator.class_indices
+print(train_label_map)
 u = np.unique(train_labels)
 data_dict={}
 for i in range(0,len(u)):
