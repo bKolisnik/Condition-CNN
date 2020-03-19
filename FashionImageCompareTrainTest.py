@@ -112,8 +112,8 @@ for i in range(0,len(train_labels)):
 
 
 print("Train Confusion Matrix")
-print(tf.math.confusion_matrix(tr_l,tr_pr))
-
+train_mat = pd.DataFrame(tf.math.confusion_matrix(tr_l,tr_pr))
+print(train_mat)
 
 test_pred = np.load('test_pred.npy')
 test_labels = test_df[modelT].values
@@ -127,7 +127,9 @@ for i in range(0,len(test_labels)):
     te_l[i] = train_label_map[test_labels[i]]
 
 print("Test Confusion Matrix")
-print(tf.math.confusion_matrix(te_l,te_pr))
+test_mat = pd.DataFrame(tf.math.confusion_matrix(te_l,te_pr))
+print(test_mat)
+
 
 val_pred = np.load('val_pred.npy')
 val_labels = val_df[modelT].values
@@ -142,4 +144,5 @@ for i in range(0,len(val_labels)):
     val_l[i] = train_label_map[val_labels[i]]
 
 print("Validation Confusion Matrix")
-print(tf.math.confusion_matrix(val_l,val_pr))
+val_mat = pd.DataFrame(tf.math.confusion_matrix(val_l,val_pr))
+print(val_mat)
