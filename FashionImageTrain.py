@@ -168,10 +168,8 @@ try:
     print("Test generator n", test_generator.n)
     print("Test generator batch size", test_generator.batch_size)
     STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
-    model.evaluate_generator(generator=test_generator,
-                             steps=STEP_SIZE_TEST)
 
-    model.evaluate()
+    model.evaluate(x=test_generator,steps=STEP_SIZE_TEST)
 except ValueError as v:
     print(v)
 
