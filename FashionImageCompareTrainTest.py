@@ -104,13 +104,15 @@ inv_train_label_map = dict(zip(train_label_map.values(),train_label_map.keys()))
 
 print(train_label_map)
 tr_pr = [None]*len(train_labels)
+tr_l = [None]*len(train_labels)
 for i in range(0,len(train_labels)):
-    tr_pr[i] = inv_train_label_map[np.argmax(train_pred[i])]
-    #tr_l[i] = data_dict[train_labels[i]]
+    #tr_pr[i] = inv_train_label_map[np.argmax(train_pred[i])]
+    tr_pr[i] = np.argmax(train_pred[i])
+    tr_l[i] = train_label_map[train_labels[i]]
 
 
 print("Train Confusion Matrix")
-print(tf.math.confusion_matrix(train_labels,tr_pr))
+print(tf.math.confusion_matrix(tr_l,tr_pr))
 
 
 test_pred = np.load('test_pred.npy')
@@ -118,12 +120,14 @@ test_labels = test_df[modelT].values
 
 
 te_pr = [None]*len(test_labels)
+te_l = [None]*len(test_labels)
 for i in range(0,len(test_labels)):
-    tr_pr[i] = inv_train_label_map[np.argmax(test_pred[i])]
-
+    #tr_pr[i] = inv_train_label_map[np.argmax(test_pred[i])]
+    te_pr[i] = np.argmax(test_pred[i])
+    te_l[i] = train_label_map[test_labels[i]]
 
 print("Test Confusion Matrix")
-print(tf.math.confusion_matrix(test_labels,te_pr))
+print(tf.math.confusion_matrix(te_l,te_pr))
 
 val_pred = np.load('val_pred.npy')
 val_labels = val_df[modelT].values
@@ -131,7 +135,11 @@ val_labels = val_df[modelT].values
 #va_pr = np.zeros(len(val_pred))
 
 val_pr = [None]*len(val_labels)
-for i in range(0,len(test_labels)):
-    tr_pr[i] = inv_train_label_map[np.argmax(val_pred[i])]
+val_l = [None]*len(val_labels)
+for i in range(0,len(val_labels)):
+    #tr_pr[i] = inv_train_label_map[np.argmax(val_pred[i])]
+    val_pr[i] = np.argmax(val_pred[i])
+    val_l[i] = train_label_map[val_labels[i]]
+
 print("Validation Confusion Matrix")
-print(tf.math.confusion_matrix(val_labels,va_pr))
+print(tf.math.confusion_matrix(val_l,va_pr))
