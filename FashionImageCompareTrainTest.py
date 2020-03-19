@@ -81,8 +81,21 @@ val_generator = test_datagen.flow_from_dataframe(
 
 #do the predictions
 
+def save_predictions():
+    train_pred = model.predict(x=train_generator)
+    np.save('train_pred.npy',train_pred)
+
+    test_pred = model.predict(x=test_generator)
+    np.save('test_pred.npy', test_pred)
+
+    val_pred = model.predict(x=val_generator)
+    np.save('val_pred.npy', val_pred)
+
+save_predictions()
+
+
 #returns a numpy array of predictions
-train_pred = model.predict(x=train_generator)
+train_pred = np.load('train_pred.npy')
 train_labels = train_df[modelT].values
 u = np.unique(train_labels)
 data_dict={}
@@ -94,23 +107,23 @@ tr_pr = np.zeros(len(train_pred))
 tr_l = np.zeros(len(train_labels))
 for i in range(0,len(train_labels)):
     tr_pr[i] = data_dict[train_pred[i]]
-    tr_l = data_dict[train_labels[i]]
+    tr_l[i] = data_dict[train_labels[i]]
 
 print("Train Confusion Matrix")
 print(tf.math.confusion_matrix(tr_l,tr_pr))
 
 
-test_pred = model.predict(x=test_generator)
+test_pred = np.load('test_pred.npy')
 test_labels = test_df[modelT].values
 te_pr = np.zeros(len(test_pred))
 te_l = np.zeros(len(test_labels))
 for i in range(0,len(test_labels)):
     te_pr[i] = data_dict[test_pred[i]]
-    te_l = data_dict[test_labels[i]]
+    te_l[i] = data_dict[test_labels[i]]
 print("Test Confusion Matrix")
 print(tf.math.confusion_matrix(te_l,te_pr))
 
-val_pred = model.predict(x=val_generator)
+val_pred = np.load('val_pred.npy')
 val_labels = val_df[modelT].values
 va_pr = np.zeros(len(val_pred))
 va_l = np.zeros(len(val_labels))
