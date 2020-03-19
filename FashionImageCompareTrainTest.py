@@ -4,7 +4,7 @@ import tensorflow as tf
 import sys
 import numpy as np  # linear algebra
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
-from tensorflow.math import confusion_matrix
+
 '''This module takes in a trained model and compares it's predictions on each dataset
 then output confusion matrices for each dataset so you can see why the model is performing well on train but poorly on test.'''
 
