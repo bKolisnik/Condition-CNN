@@ -53,7 +53,7 @@ test_generator = test_datagen.flow_from_dataframe(
         dataframe=test_df,
         directory=direc,
         x_col="filepath",
-        y_col="subCategory",
+        y_col=modelT,
         target_size=(224, 224),
         batch_size=batch,
         class_mode='categorical')
@@ -62,5 +62,12 @@ test_generator = test_datagen.flow_from_dataframe(
 print("Test generator n",test_generator.n)
 print("Test generator batch size",test_generator.batch_size)
 STEP_SIZE_TEST=test_generator.n//test_generator.batch_size
-print(model.evaluate_generator(generator=test_generator,
+print(model.evaluate(x=test_generator,
         steps=STEP_SIZE_TEST))
+
+#get model predictions into 1D tensor
+#get true labels into 1D tensor
+
+
+
+
