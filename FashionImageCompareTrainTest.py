@@ -142,4 +142,4 @@ for i in range(0,len(val_labels)):
     val_l[i] = train_label_map[val_labels[i]]
 
 print("Validation Confusion Matrix")
-print(tf.math.confusion_matrix(val_l,va_pr))
+print(tf.math.confusion_matrix(val_l,val_pr))
