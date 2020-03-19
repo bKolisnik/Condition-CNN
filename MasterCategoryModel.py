@@ -33,7 +33,7 @@ class Master:
         # only 44 classes that work in the dataset.
         # 22 classes with edited dataset
         # 21
-        predictions = Dense(21, activation='softmax')(x)
+        predictions = Dense(4, activation='softmax')(x)
 
         # Model to be trained
         model = Model(inputs=base_model.input, outputs=predictions)
