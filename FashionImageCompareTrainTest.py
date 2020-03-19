@@ -96,7 +96,7 @@ def save_predictions():
 
 #returns a numpy array of predictions
 train_pred = np.load('train_pred.npy')
-print(train_pred.shape)
+print(train_pred[0])
 train_labels = train_df[modelT].values
 u = np.unique(train_labels)
 data_dict={}
