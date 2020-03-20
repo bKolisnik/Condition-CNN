@@ -36,7 +36,7 @@ import sys
 
 
 
-arg_names = ['filename','model', 'epochs','batch']
+arg_names = ['filename','model','typ', 'epochs','batch']
 args = dict(zip(arg_names, sys.argv))
 
 if(args.get('model') is not None):
@@ -54,24 +54,35 @@ if(args.get('batch') is not None):
 else:
     batch = 64
 
+if(args.get('typ') is not None):
+    typ=args['typ']
+else:
+    typ = 'inception'
 
 print("Building model " + modelT)
+print("Using architecture of type " + typ)
 print("For " + str(epochs) + " epochs.")
 print("Batch size " + str(batch))
 
 if(modelT=='masterCategory'):
     from MasterCategoryModel import Master
-    model = Master().model
+    model = Master(typ).model
 
 elif(modelT=='subCategory'):
     from SubCategoryModel import SubCategory
-    model = SubCategory().model
+    model = SubCategory(typ).model
 elif(modelT=='articleType'):
     #model is articleType
     from ArticleTypeModel import ArticleType
-    model = ArticleType().model
+    model = ArticleType(typ).model
 
-
+if(typ=='vgg'):
+    target_size=(224,224)
+elif(typ=='inception'):
+    target_size = (299, 299)
+elif(typ=='resnet'):
+    #resnet
+    target_size = (224, 224)
 
 
 train_df = pd.read_csv("fashion_product_train.csv")
@@ -125,7 +136,7 @@ train_generator = train_datagen.flow_from_dataframe(
     directory=direc,
     x_col="filepath",
     y_col=modelT,
-    target_size=(224, 224),
+    target_size=target_size,
     batch_size=batch,
     class_mode='categorical')
 val_generator = test_datagen.flow_from_dataframe(
@@ -133,7 +144,7 @@ val_generator = test_datagen.flow_from_dataframe(
     directory=direc,
     x_col="filepath",
     y_col=modelT,
-    target_size=(224, 224),
+    target_size=target_size,
     batch_size=batch,
     class_mode='categorical')
 test_generator = test_datagen.flow_from_dataframe(
@@ -141,7 +152,7 @@ test_generator = test_datagen.flow_from_dataframe(
     directory=direc,
     x_col="filepath",
     y_col=modelT,
-    target_size=(224, 224),
+    target_size=target_size,
     batch_size=batch,
     class_mode='categorical')
 
@@ -167,11 +178,11 @@ except ValueError as v:
     print(v)
 # Saving the weights in the current directory
 if modelT=='masterCategory':
-    model.save_weights("Fashion_pretrain_resnet50_MasterCategory.h5")
+    model.save_weights("Fashion_pretrain_resnet50_MasterCategory_"+typ+".h5")
 elif modelT=='subCategory':
-    model.save_weights("Fashion_pretrain_resnet50_SubCategory.h5")
+    model.save_weights("Fashion_pretrain_resnet50_SubCategory_"+typ+".h5")
 elif modelT=='articleType':
-    model.save_weights("Fashion_pretrain_resnet50_ArticleType.h5")
+    model.save_weights("Fashion_pretrain_resnet50_ArticleType+"+typ+".h5")
 
 try:
     print("Test generator n", test_generator.n)

@@ -5,13 +5,18 @@ import numpy as np  # linear algebra
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 
 direc = '../data/fashion-dataset/images/'
-arg_names = ['filename','model','batch']
+arg_names = ['filename','model','typ','batch']
 args = dict(zip(arg_names, sys.argv))
 
 if(args.get('model') is not None):
     modelT=args['model']
 else:
     modelT = 'masterCategory'
+
+if(args.get('typ') is not None):
+    typ=args['typ']
+else:
+    typ = 'inception'
 
 if(args.get('batch') is not None):
     batch = int(args['batch'])
@@ -20,25 +25,34 @@ else:
 
 print("Testing model " + modelT)
 print("Batch size " + str(batch))
+print("Type is "+typ)
 
 if(modelT=='masterCategory'):
     from MasterCategoryModel import Master
-    model = Master().model
+    model = Master(typ).model
 
 elif(modelT=='subCategory'):
     from SubCategoryModel import SubCategory
-    model = SubCategory().model
+    model = SubCategory(typ).model
 elif(modelT=='articleType'):
     #model is articleType
     from ArticleTypeModel import ArticleType
-    model = ArticleType().model
+    model = ArticleType(typ).model
+
+if(typ=='vgg'):
+    target_size=(224,224)
+elif(typ=='inception'):
+    target_size = (299, 299)
+elif(typ=='resnet'):
+    #resnet
+    target_size = (224, 224)
 
 if modelT=='masterCategory':
-    model.load_weights("Fashion_pretrain_resnet50_MasterCategory.h5")
+    model.load_weights("Fashion_pretrain_resnet50_MasterCategory_"+typ+".h5")
 elif modelT=='subCategory':
-    model.load_weights("Fashion_pretrain_resnet50_SubCategory.h5")
+    model.load_weights("Fashion_pretrain_resnet50_SubCategory_"+typ+".h5")
 elif modelT=='articleType':
-    model.load_weights("Fashion_pretrain_resnet50_ArticleType.h5")
+    model.load_weights("Fashion_pretrain_resnet50_ArticleType+"+typ+".h5")
 #load the weights
 
 
@@ -54,7 +68,7 @@ test_generator = test_datagen.flow_from_dataframe(
         directory=direc,
         x_col="filepath",
         y_col=modelT,
-        target_size=(224, 224),
+        target_size=target_size,
         batch_size=batch,
         class_mode='categorical')
 

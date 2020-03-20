@@ -10,13 +10,18 @@ import os.path
 then output confusion matrices for each dataset so you can see why the model is performing well on train but poorly on test.'''
 
 direc = '../data/fashion-dataset/images/'
-arg_names = ['filename','model','batch']
+arg_names = ['filename','model','typ','batch']
 args = dict(zip(arg_names, sys.argv))
 
 if(args.get('model') is not None):
     modelT=args['model']
 else:
     modelT = 'masterCategory'
+
+if(args.get('typ') is not None):
+    typ=args['typ']
+else:
+    typ = 'inception'
 
 if(args.get('batch') is not None):
     batch = int(args['batch'])
@@ -25,25 +30,34 @@ else:
 
 print("Testing model " + modelT)
 print("Batch size " + str(batch))
+print("Type is "+typ)
 
 if(modelT=='masterCategory'):
     from MasterCategoryModel import Master
-    model = Master().model
+    model = Master(typ).model
 
 elif(modelT=='subCategory'):
     from SubCategoryModel import SubCategory
-    model = SubCategory().model
+    model = SubCategory(typ).model
 elif(modelT=='articleType'):
     #model is articleType
     from ArticleTypeModel import ArticleType
-    model = ArticleType().model
+    model = ArticleType(typ).model
+
+if(typ=='vgg'):
+    target_size=(224,224)
+elif(typ=='inception'):
+    target_size = (299, 299)
+elif(typ=='resnet'):
+    #resnet
+    target_size = (224, 224)
 
 if modelT=='masterCategory':
-    model.load_weights("Fashion_pretrain_resnet50_MasterCategory.h5")
+    model.load_weights("Fashion_pretrain_resnet50_MasterCategory_"+typ+".h5")
 elif modelT=='subCategory':
-    model.load_weights("Fashion_pretrain_resnet50_SubCategory.h5")
+    model.load_weights("Fashion_pretrain_resnet50_SubCategory_"+typ+".h5")
 elif modelT=='articleType':
-    model.load_weights("Fashion_pretrain_resnet50_ArticleType.h5")
+    model.load_weights("Fashion_pretrain_resnet50_ArticleType+"+typ+".h5")
 
 test_df = pd.read_csv("fashion_product_test.csv")
 train_df = pd.read_csv("fashion_product_train.csv")
@@ -57,7 +71,7 @@ test_generator = test_datagen.flow_from_dataframe(
         directory=direc,
         x_col="filepath",
         y_col=modelT,
-        target_size=(224, 224),
+        target_size=target_size,
         batch_size=batch,
         class_mode='categorical')
 
@@ -66,7 +80,7 @@ train_generator = test_datagen.flow_from_dataframe(
     directory=direc,
     x_col="filepath",
     y_col=modelT,
-    target_size=(224, 224),
+    target_size=target_size,
     batch_size=batch,
     class_mode='categorical')
 val_generator = test_datagen.flow_from_dataframe(
@@ -74,7 +88,7 @@ val_generator = test_datagen.flow_from_dataframe(
     directory=direc,
     x_col="filepath",
     y_col=modelT,
-    target_size=(224, 224),
+    target_size=target_size,
     batch_size=batch,
     class_mode='categorical')
 
@@ -84,22 +98,22 @@ val_generator = test_datagen.flow_from_dataframe(
 
 def save_predictions():
     train_pred = model.predict(x=train_generator)
-    np.save('train_pred_'+modelT+'.npy',train_pred)
+    np.save('train_pred_'+modelT+"_"+typ+'.npy',train_pred)
 
     test_pred = model.predict(x=test_generator)
-    np.save('test_pred_'+modelT+'.npy',test_pred)
+    np.save('test_pred_'+modelT+"_"+typ+'.npy',test_pred)
 
     val_pred = model.predict(x=val_generator)
-    np.save('val_pred_' + modelT + '.npy', val_pred)
+    np.save('test_pred_'+modelT+"_"+typ+'.npy', val_pred)
 
 #check if predictions already made
-if not os.path.isfile('train_pred_'+modelT+'.npy'):
+if not os.path.isfile('train_pred_'+modelT+"_"+typ+'.npy'):
     save_predictions()
 
 
 #predict returns the 2d array where each sample returns a vector of predictions.
-train_pred = np.load('train_pred_'+modelT+'.npy')
-np.savetxt("train_pred_max.txt",np.argmax(train_pred,axis=1))
+train_pred = np.load('train_pred_'+modelT+"_"+typ+'.npy')
+np.savetxt("train_pred_max_"+typ+".txt",np.argmax(train_pred,axis=1))
 train_labels = train_df[modelT].values
 
 #label_map has class name keys and index of the output vector as values
@@ -119,7 +133,7 @@ print("Train Confusion Matrix")
 train_mat = pd.DataFrame(tf.math.confusion_matrix(tr_l,tr_pr).numpy())
 print(train_mat)
 
-test_pred = np.load('test_pred_'+modelT+'.npy')
+test_pred = np.load('test_pred_'+modelT+"_"+typ+'.npy')
 test_labels = test_df[modelT].values
 
 
@@ -135,7 +149,7 @@ test_mat = pd.DataFrame(tf.math.confusion_matrix(te_l,te_pr).numpy())
 print(test_mat)
 
 
-val_pred = np.load('val_pred_'+modelT+'.npy')
+val_pred = np.load('val_pred_'+modelT+"_"+typ+'.npy')
 val_labels = val_df[modelT].values
 
 #va_pr = np.zeros(len(val_pred))

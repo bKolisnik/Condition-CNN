@@ -1,10 +1,12 @@
 # Importing the important libraries
 import tensorflow as tf
 from tensorflow.keras.applications.resnet50 import ResNet50
+from tensorflow.keras.applications.vgg16 import VGG16
+from tensorflow.keras.applications.inception_v3 import InceptionV3
 from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import SGD
-
+import sys
 
 
 
@@ -17,9 +19,16 @@ from tensorflow.keras.optimizers import SGD
 class Master:
     '''One parameter model which is a keras model'''
 
-    def __init__(self):
+    def __init__(self,typ):
         # Download the architecture of ResNet50 with ImageNet weights
-        base_model = ResNet50(include_top=False, weights='imagenet')
+        if (typ == 'vgg'):
+            base_model = VGG16(include_top=False, weights='imagenet')
+        elif (typ == 'inception'):
+            base_model = InceptionV3(include_top=False, weights=None)
+        elif (typ == 'resnet'):
+
+            base_model = ResNet50(include_top=False,weights=None)
+
 
         # Taking the output of the last convolution block in ResNet50
         x = base_model.output
@@ -42,14 +51,12 @@ class Master:
 
         # Training only top layers i.e. the layers which we have added in the end
 
-        '''
-        for layer in base_model.layers:
-            layer.trainable = False
-        '''
 
+        #freezing specific to model VGG Yes others no pretrain.
         #print("# layers" + str(len(base_model.layers)))
-        for layer in base_model.layers[:171]:
-            layer.trainable = False
+        if(typ == 'vgg'):
+            for layer in base_model.layers[:171]:
+                layer.trainable = False
 
         #trainable_params = tf.keras.backend.count_params(model.trainable_weights)
         #print("Trainable paramaters: "+str(trainable_params))
@@ -61,4 +68,7 @@ class Master:
         self.model = model
 
 if __name__ == "__main__":
-    model = Master().model
+
+    typ = sys.argv[1]
+
+    model = Master(typ).model
