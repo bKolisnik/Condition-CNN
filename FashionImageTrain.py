@@ -78,6 +78,11 @@ train_df = pd.read_csv("kaggle_fashion_product_train.csv")
 val_df = pd.read_csv("kaggle_fashion_product_validation.csv")
 test_df = pd.read_csv("kaggle_fashion_product_test.csv")
 
+print(test_df.groupby("masterCategory").count()['id'])
+print(train_df.groupby("masterCategory").count()['id'])
+print(val.groupby("masterCategory").count()['id'])
+
+
 
 def check_files_existence(directory, df):
     for row in df.itertuples():
@@ -101,7 +106,7 @@ check_files_existence(direc, test_df)
 train_datagen = ImageDataGenerator(rescale=1. / 255,
                                    shear_range=0.1,
                                    zoom_range=0.1,
-                                   horizontal_flip=True)
+                                   horizontal_flip=False)
 
 test_datagen = ImageDataGenerator(rescale=1. / 255)
 
@@ -139,6 +144,10 @@ test_generator = test_datagen.flow_from_dataframe(
     target_size=(224, 224),
     batch_size=batch,
     class_mode='categorical')
+
+print(train_generator.class_indices)
+print(test_generator.class_indices)
+print(val_generator.class_indices)
 
 # Training the model for 10 epochs
 
