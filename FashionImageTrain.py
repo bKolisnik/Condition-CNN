@@ -74,9 +74,9 @@ elif(modelT=='articleType'):
 
 
 
-train_df = pd.read_csv("kaggle_fashion_product_train.csv")
-val_df = pd.read_csv("kaggle_fashion_product_validation.csv")
-test_df = pd.read_csv("kaggle_fashion_product_test.csv")
+train_df = pd.read_csv("fashion_product_train.csv")
+val_df = pd.read_csv("fashion_product_validation.csv")
+test_df = pd.read_csv("fashion_product_test.csv")
 
 print(test_df.groupby("masterCategory").count()['id'])
 print(train_df.groupby("masterCategory").count()['id'])

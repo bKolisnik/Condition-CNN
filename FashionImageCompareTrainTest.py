@@ -44,9 +44,9 @@ elif modelT=='subCategory':
 elif modelT=='articleType':
     model.load_weights("Fashion_pretrain_resnet50_ArticleType.h5")
 
-test_df = pd.read_csv("kaggle_fashion_product_test.csv")
-train_df = pd.read_csv("kaggle_fashion_product_train.csv")
-val_df = pd.read_csv("kaggle_fashion_product_validation.csv")
+test_df = pd.read_csv("fashion_product_test.csv")
+train_df = pd.read_csv("fashion_product_train.csv")
+val_df = pd.read_csv("fashion_product_validation.csv")
 
 
 
