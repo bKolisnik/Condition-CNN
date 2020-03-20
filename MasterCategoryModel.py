@@ -47,12 +47,12 @@ class Master:
             layer.trainable = False
         '''
 
-        print("# layers" + str(len(base_model.layers)))
+        #print("# layers" + str(len(base_model.layers)))
         for layer in base_model.layers[:171]:
             layer.trainable = False
 
-        trainable_params = tf.keras.backend.count_params(model.trainable_weights)
-        print("Trainable paramaters: "+str(trainable_params))
+        #trainable_params = tf.keras.backend.count_params(model.trainable_weights)
+        #print("Trainable paramaters: "+str(trainable_params))
 
 
         # Compiling the model
