@@ -84,21 +84,21 @@ val_generator = test_datagen.flow_from_dataframe(
 
 def save_predictions():
     train_pred = model.predict(x=train_generator)
-    np.save('train_pred.npy',train_pred)
+    np.save('train_pred_'+modelT+'.npy',train_pred)
 
     test_pred = model.predict(x=test_generator)
-    np.save('test_pred.npy', test_pred)
+    np.save('test_pred_'+modelT+'.npy',test_pred)
 
     val_pred = model.predict(x=val_generator)
-    np.save('val_pred.npy', val_pred)
+    np.save('val_pred_' + modelT + '.npy', val_pred)
 
 #check if predictions already made
-if not os.path.isfile('train_pred.npy'):
+if not os.path.isfile('train_pred_'+modelT+'.npy'):
     save_predictions()
 
 
 #predict returns the 2d array where each sample returns a vector of predictions.
-train_pred = np.load('train_pred.npy')
+train_pred = np.load('train_pred_'+modelT+'.npy')
 np.savetxt("train_pred_max.txt",np.argmax(train_pred,axis=1))
 train_labels = train_df[modelT].values
 
@@ -119,7 +119,7 @@ print("Train Confusion Matrix")
 train_mat = pd.DataFrame(tf.math.confusion_matrix(tr_l,tr_pr).numpy())
 print(train_mat)
 
-test_pred = np.load('test_pred.npy')
+test_pred = np.load('test_pred_'+modelT+'.npy')
 test_labels = test_df[modelT].values
 
 
@@ -135,7 +135,7 @@ test_mat = pd.DataFrame(tf.math.confusion_matrix(te_l,te_pr).numpy())
 print(test_mat)
 
 
-val_pred = np.load('val_pred.npy')
+val_pred = np.load('val_pred_'+modelT+'.npy')
 val_labels = val_df[modelT].values
 
 #va_pr = np.zeros(len(val_pred))
