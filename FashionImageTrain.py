@@ -80,7 +80,7 @@ test_df = pd.read_csv("kaggle_fashion_product_test.csv")
 
 print(test_df.groupby("masterCategory").count()['id'])
 print(train_df.groupby("masterCategory").count()['id'])
-print(val.groupby("masterCategory").count()['id'])
+print(val_df.groupby("masterCategory").count()['id'])
 
 
 
