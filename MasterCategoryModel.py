@@ -37,7 +37,7 @@ class Master:
         if(typ!="vgg"):
             x = GlobalAveragePooling2D()(x)
         else:
-            x = Flatten(x)
+            x = Flatten()(x)
 
         # Adding a fully connected layer having 1024 neurons
         x = Dense(1024, activation='relu')(x)
