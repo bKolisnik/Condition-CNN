@@ -106,7 +106,7 @@ check_files_existence(direc, test_df)
 train_datagen = ImageDataGenerator(rescale=1. / 255,
                                    shear_range=0.1,
                                    zoom_range=0.1,
-                                   horizontal_flip=False)
+                                   horizontal_flip=True)
 
 test_datagen = ImageDataGenerator(rescale=1. / 255)
 

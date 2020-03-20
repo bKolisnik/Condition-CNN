@@ -6,6 +6,8 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import SGD
 
 
+
+
 # print(tf.test.is_gpu_available())
 
 # keras verison is 2.2.4-tf
@@ -37,14 +39,26 @@ class Master:
 
         # Model to be trained
         model = Model(inputs=base_model.input, outputs=predictions)
-        #print(model.summary())
 
         # Training only top layers i.e. the layers which we have added in the end
 
+        '''
         for layer in base_model.layers:
             layer.trainable = False
+        '''
+
+        print("# layers" + str(len(base_model.layers)))
+        for layer in base_model.layers[:171]:
+            layer.trainable = False
+
+        trainable_params = tf.keras.backend.count_params(model.trainable_weights)
+        print("Trainable paramaters: "+str(trainable_params))
+
 
         # Compiling the model
-        model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
+        model.compile(optimizer=SGD(lr=0.001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
 
         self.model = model
+
+if __name__ == "__main__":
+    model = Master().model
