@@ -34,7 +34,8 @@ class Master:
         x = base_model.output
 
         # Adding a Global Average Pooling layer
-        x = GlobalAveragePooling2D()(x)
+        if(typ!="vgg"):
+            x = GlobalAveragePooling2D()(x)
 
         # Adding a fully connected layer having 1024 neurons
         x = Dense(1024, activation='relu')(x)
@@ -55,13 +56,14 @@ class Master:
         #freezing specific to model VGG Yes others no pretrain.
         #print("# layers" + str(len(base_model.layers)))
         if(typ == 'vgg'):
-            for layer in base_model.layers[:171]:
+            for layer in base_model.layers[:-2]:
                 layer.trainable = False
 
         #trainable_params = tf.keras.backend.count_params(model.trainable_weights)
         #print("Trainable paramaters: "+str(trainable_params))
 
-
+        print("Layers: "+str(len(base_model.layers)))
+        print(model.summary())
         # Compiling the model
         model.compile(optimizer=SGD(lr=0.001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
 
