@@ -3,7 +3,7 @@ import tensorflow as tf
 from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.applications.inception_v3 import InceptionV3
-from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, Flatten
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import SGD
 import sys
@@ -36,6 +36,8 @@ class Master:
         # Adding a Global Average Pooling layer
         if(typ!="vgg"):
             x = GlobalAveragePooling2D()(x)
+        else:
+            x = Flatten(x)
 
         # Adding a fully connected layer having 1024 neurons
         x = Dense(1024, activation='relu')(x)
