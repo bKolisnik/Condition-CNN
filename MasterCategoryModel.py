@@ -34,10 +34,8 @@ class Master:
         x = base_model.output
 
         # Adding a Global Average Pooling layer
-        if(typ!="vgg"):
-            x = GlobalAveragePooling2D()(x)
-        else:
-            x = Flatten()(x)
+        x = GlobalAveragePooling2D()(x)
+
 
         # Adding a fully connected layer having 1024 neurons
         x = Dense(1024, activation='relu')(x)
