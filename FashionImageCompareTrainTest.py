@@ -117,14 +117,14 @@ train_pred = np.load('train_pred_'+modelT+"_"+typ+'.npy')
 np.savetxt("train_pred_max_"+typ+".txt",np.argmax(train_pred,axis=1))
 #train_labels = train_df[modelT].values
 train_generator.reset()
-print(train_generator.index_array)
-train_labels = train_generator.classes[train_generator.index_array]
+print(train_generator.classes)
+train_labels = train_generator.classes
 train_pred = np.argmax(train_pred, axis=-1)
 
-acc = sum(y_pred==classes)/len(train_pred)
+acc = sum(train_pred==train_labels)/len(train_pred)
 print("Training Accuracy is "+str(acc))
 
-confusion_matrix(train_generator.classes[train_generator.index_array],train_pred)
+confusion_matrix(train_labels,train_pred)
 
 '''
 #label_map has class name keys and index of the output vector as values
