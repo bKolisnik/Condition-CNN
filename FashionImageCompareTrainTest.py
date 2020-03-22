@@ -99,11 +99,12 @@ val_generator = test_datagen.flow_from_dataframe(
 #do the predictions
 
 def save_predictions():
+    '''
     STEP_SIZE_TRAIN = train_generator.n // train_generator.batch_size
     train_pred = model.predict(x=train_generator)
 
     np.save('train_pred_'+modelT+"_"+typ+'.npy',train_pred)
-
+    '''
     STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
     test_pred = model.predict(x=test_generator)
 
@@ -115,10 +116,10 @@ def save_predictions():
     np.save('val_pred_'+modelT+"_"+typ+'.npy', val_pred)
 
 #check if predictions already made
-if not os.path.isfile('train_pred_'+modelT+"_"+typ+'.npy'):
+if not os.path.isfile('val_pred_'+modelT+"_"+typ+'.npy'):
     save_predictions()
 
-
+'''
 #predict returns the 2d array where each sample returns a vector of predictions.
 train_pred = np.load('train_pred_'+modelT+"_"+typ+'.npy')
 #train_labels = train_df[modelT].values
@@ -130,6 +131,7 @@ acc = sum(train_pred==train_labels)/len(train_pred)
 print("Training Accuracy is "+str(acc))
 
 confusion_matrix(train_labels,train_pred)
+'''
 
 test_pred = np.load('test_pred_'+modelT+"_"+typ+'.npy')
 test_labels = test_generator.classes
