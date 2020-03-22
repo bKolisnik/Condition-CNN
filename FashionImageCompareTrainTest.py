@@ -5,6 +5,7 @@ import sys
 import numpy as np  # linear algebra
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 import os.path
+from sklearn.metrics import confusion_matrix
 
 '''This module takes in a trained model and compares it's predictions on each dataset
 then output confusion matrices for each dataset so you can see why the model is performing well on train but poorly on test.'''
@@ -114,8 +115,16 @@ if not os.path.isfile('train_pred_'+modelT+"_"+typ+'.npy'):
 #predict returns the 2d array where each sample returns a vector of predictions.
 train_pred = np.load('train_pred_'+modelT+"_"+typ+'.npy')
 np.savetxt("train_pred_max_"+typ+".txt",np.argmax(train_pred,axis=1))
-train_labels = train_df[modelT].values
+#train_labels = train_df[modelT].values
+train_labels = train_generator.classes[train_generator.index_array]
+train_pred = np.argmax(train_pred, axis=-1)
 
+acc = sum(y_pred==classes)/len(train_pred)
+print("Training Accuracy is "+str(acc))
+
+confusion_matrix(train_generator.classes[train_generator.index_array],train_pred)
+
+'''
 #label_map has class name keys and index of the output vector as values
 train_label_map = train_generator.class_indices
 inv_train_label_map = dict(zip(train_label_map.values(),train_label_map.keys()))
@@ -164,3 +173,4 @@ for i in range(0,len(val_labels)):
 print("Validation Confusion Matrix")
 val_mat = pd.DataFrame(tf.math.confusion_matrix(val_l,val_pr).numpy())
 print(val_mat)
+'''
