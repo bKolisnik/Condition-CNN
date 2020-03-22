@@ -100,17 +100,17 @@ val_generator = test_datagen.flow_from_dataframe(
 
 def save_predictions():
     STEP_SIZE_TRAIN = train_generator.n // train_generator.batch_size
-    train_pred = model.predict(x=train_generator,steps=STEP_SIZE_TRAIN)
+    train_pred = model.predict(x=train_generator)
 
     np.save('train_pred_'+modelT+"_"+typ+'.npy',train_pred)
 
     STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
-    test_pred = model.predict(x=test_generator,steps=STEP_SIZE_TEST)
+    test_pred = model.predict(x=test_generator)
 
     np.save('test_pred_'+modelT+"_"+typ+'.npy',test_pred)
 
     STEP_SIZE_VAL = val_generator.n // val_generator.batch_size
-    val_pred = model.predict(x=val_generator,steps=STEP_SIZE_VAL)
+    val_pred = model.predict(x=val_generator)
 
     np.save('val_pred_'+modelT+"_"+typ+'.npy', val_pred)
 
@@ -121,10 +121,8 @@ if not os.path.isfile('train_pred_'+modelT+"_"+typ+'.npy'):
 
 #predict returns the 2d array where each sample returns a vector of predictions.
 train_pred = np.load('train_pred_'+modelT+"_"+typ+'.npy')
-np.savetxt("train_pred_max_"+typ+".txt",np.argmax(train_pred, axis=-1))
 #train_labels = train_df[modelT].values
 
-print(train_generator.classes)
 train_labels = train_generator.classes
 train_pred = np.argmax(train_pred, axis=-1)
 
@@ -142,7 +140,9 @@ print("Testing Accuracy is "+str(acc))
 
 val_pred = np.load('val_pred_'+modelT+"_"+typ+'.npy')
 val_labels = val_generator.classes
+print(val_labels)
 val_pred = np.argmax(val_pred, axis=-1)
+np.savetxt("val_pred_max_"+typ+".txt",val_pred)
 acc = sum(val_pred==val_labels)/len(val_pred)
 print("Validation Accuracy is "+str(acc))
 '''
