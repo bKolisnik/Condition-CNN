@@ -99,16 +99,16 @@ val_generator = test_datagen.flow_from_dataframe(
 #do the predictions
 
 def save_predictions():
-    #train_pred = model.predict(x=train_generator)
-    train_pred = model.predict_classes(x=train_generator)
+    train_pred = model.predict(x=train_generator)
+    
     np.save('train_pred_'+modelT+"_"+typ+'.npy',train_pred)
 
-    #test_pred = model.predict(x=test_generator)
-    test_pred = model.predict_classes(x=test_generator)
+    test_pred = model.predict(x=test_generator)
+
     np.save('test_pred_'+modelT+"_"+typ+'.npy',test_pred)
 
-    #val_pred = model.predict(x=val_generator)
-    val_pred = model.predict_classes(x=val_generator)
+    val_pred = model.predict(x=val_generator)
+
     np.save('val_pred_'+modelT+"_"+typ+'.npy', val_pred)
 
 #check if predictions already made
@@ -123,7 +123,7 @@ np.savetxt("train_pred_max_"+typ+".txt",train_pred)
 
 print(train_generator.classes)
 train_labels = train_generator.classes
-#train_pred = np.argmax(train_pred, axis=-1)
+train_pred = np.argmax(train_pred, axis=-1)
 
 acc = sum(train_pred==train_labels)/len(train_pred)
 print("Training Accuracy is "+str(acc))
@@ -132,14 +132,14 @@ confusion_matrix(train_labels,train_pred)
 
 test_pred = np.load('test_pred_'+modelT+"_"+typ+'.npy')
 test_labels = test_generator.classes
-#test_pred = np.argmax(test_pred, axis=-1)
+test_pred = np.argmax(test_pred, axis=-1)
 acc = sum(test_pred==test_labels)/len(test_pred)
 print("Testing Accuracy is "+str(acc))
 
 
 val_pred = np.load('val_pred_'+modelT+"_"+typ+'.npy')
 val_labels = val_generator.classes
-#val_pred = np.argmax(val_pred, axis=-1)
+val_pred = np.argmax(val_pred, axis=-1)
 acc = sum(val_pred==val_labels)/len(val_pred)
 print("Validation Accuracy is "+str(acc))
 '''
