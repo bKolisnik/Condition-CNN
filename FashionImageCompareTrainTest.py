@@ -104,7 +104,7 @@ def save_predictions():
     np.save('test_pred_'+modelT+"_"+typ+'.npy',test_pred)
 
     val_pred = model.predict(x=val_generator)
-    np.save('test_pred_'+modelT+"_"+typ+'.npy', val_pred)
+    np.save('val_pred_'+modelT+"_"+typ+'.npy', val_pred)
 
 #check if predictions already made
 if not os.path.isfile('train_pred_'+modelT+"_"+typ+'.npy'):
