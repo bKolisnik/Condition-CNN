@@ -65,6 +65,7 @@ class Master:
         print("Layers: "+str(len(base_model.layers)))
         #print(model.summary())
         # Compiling the model
+        #KEras will automaticall use categorical accuracy when accuracy is used.
         model.compile(optimizer=SGD(lr=0.001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
 
         self.model = model

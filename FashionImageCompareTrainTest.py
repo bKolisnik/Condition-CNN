@@ -114,7 +114,7 @@ if not os.path.isfile('train_pred_'+modelT+"_"+typ+'.npy'):
 
 #predict returns the 2d array where each sample returns a vector of predictions.
 train_pred = np.load('train_pred_'+modelT+"_"+typ+'.npy')
-np.savetxt("train_pred_max_"+typ+".txt",np.argmax(train_pred,axis=1))
+np.savetxt("train_pred_max_"+typ+".txt",train_pred)
 #train_labels = train_df[modelT].values
 train_generator.reset()
 print(train_generator.classes)
