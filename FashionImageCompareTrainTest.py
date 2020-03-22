@@ -74,7 +74,7 @@ test_generator = test_datagen.flow_from_dataframe(
         x_col="filepath",
         y_col=modelT,
         target_size=target_size,
-        batch_size=batch,
+        batch_size=1,
         class_mode='categorical')
 
 train_generator = test_datagen.flow_from_dataframe(
@@ -83,7 +83,7 @@ train_generator = test_datagen.flow_from_dataframe(
     x_col="filepath",
     y_col=modelT,
     target_size=target_size,
-    batch_size=batch,
+    batch_size=1,
     class_mode='categorical')
 val_generator = test_datagen.flow_from_dataframe(
     dataframe=val_df,
@@ -91,7 +91,7 @@ val_generator = test_datagen.flow_from_dataframe(
     x_col="filepath",
     y_col=modelT,
     target_size=target_size,
-    batch_size=batch,
+    batch_size=1,
     class_mode='categorical')
 
 
