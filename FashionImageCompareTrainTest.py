@@ -117,6 +117,7 @@ train_pred = np.load('train_pred_'+modelT+"_"+typ+'.npy')
 np.savetxt("train_pred_max_"+typ+".txt",np.argmax(train_pred,axis=1))
 #train_labels = train_df[modelT].values
 train_generator.reset()
+print(train_generator.index_array)
 train_labels = train_generator.classes[train_generator.index_array]
 train_pred = np.argmax(train_pred, axis=-1)
 
