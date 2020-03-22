@@ -99,15 +99,18 @@ val_generator = test_datagen.flow_from_dataframe(
 #do the predictions
 
 def save_predictions():
-    train_pred = model.predict(x=train_generator)
-    
+    STEP_SIZE_TRAIN = train_generator.n // train_generator.batch_size
+    train_pred = model.predict(x=train_generator,steps=STEP_SIZE_TRAIN)
+
     np.save('train_pred_'+modelT+"_"+typ+'.npy',train_pred)
 
-    test_pred = model.predict(x=test_generator)
+    STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
+    test_pred = model.predict(x=test_generator,steps=STEP_SIZE_TEST)
 
     np.save('test_pred_'+modelT+"_"+typ+'.npy',test_pred)
 
-    val_pred = model.predict(x=val_generator)
+    STEP_SIZE_VAL = val_generator.n // val_generator.batch_size
+    val_pred = model.predict(x=val_generator,steps=STEP_SIZE_VAL)
 
     np.save('val_pred_'+modelT+"_"+typ+'.npy', val_pred)
 
