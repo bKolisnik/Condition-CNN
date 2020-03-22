@@ -59,7 +59,7 @@ elif modelT=='articleType':
 # Compiling the model
 #model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
 test_df = pd.read_csv("fashion_product_test.csv")
-
+val_df = pd.read_csv("fashion_product_validation.csv")
 
 
 test_datagen = ImageDataGenerator(rescale = 1./255)
@@ -72,12 +72,28 @@ test_generator = test_datagen.flow_from_dataframe(
         batch_size=batch,
         class_mode='categorical')
 
+val_generator = test_datagen.flow_from_dataframe(
+    dataframe=val_df,
+    directory=direc,
+    x_col="filepath",
+    y_col=modelT,
+    target_size=target_size,
+    batch_size=batch,
+    class_mode='categorical')
+
 
 print("Test generator n",test_generator.n)
 print("Test generator batch size",test_generator.batch_size)
 STEP_SIZE_TEST=test_generator.n//test_generator.batch_size
 print(model.evaluate(x=test_generator,
         steps=STEP_SIZE_TEST))
+
+print("Validation Generator n",val_generator.n)
+print("Test generator batch size",val_generator.batch_size)
+STEP_SIZE_VAL=val_generator.n//val_generator.batch_size
+print(model.evaluate(x=val_generator,
+        steps=STEP_SIZE_VAL))
+
 
 #get model predictions into 1D tensor
 #get true labels into 1D tensor
