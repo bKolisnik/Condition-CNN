@@ -7,6 +7,10 @@ import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 import os.path
 from sklearn.metrics import confusion_matrix
 
+import cv2
+
+from glob import glob
+
 '''This module takes in a trained model and compares it's predictions on each dataset
 then output confusion matrices for each dataset so you can see why the model is performing well on train but poorly on test.'''
 
@@ -99,6 +103,7 @@ val_generator = test_datagen.flow_from_dataframe(
 
 #do the predictions
 
+
 def save_predictions():
     '''
     STEP_SIZE_TRAIN = train_generator.n // train_generator.batch_size
@@ -117,9 +122,16 @@ def save_predictions():
     np.save('val_pred_'+modelT+"_"+typ+'.npy', val_pred)
 
 #check if predictions already made
+'''
 if not os.path.isfile('val_pred_'+modelT+"_"+typ+'.npy'):
     save_predictions()
+'''
 
+full_size_image = cv2.imread(direc+"12431.jpg")
+resized = cv2.resize(full_size_image, target_size, interpolation=cv2.INTER_CUBIC)
+
+test_pred = model.predict(x=resized)
+print(test_pred)
 '''
 #predict returns the 2d array where each sample returns a vector of predictions.
 train_pred = np.load('train_pred_'+modelT+"_"+typ+'.npy')
@@ -134,6 +146,7 @@ print("Training Accuracy is "+str(acc))
 confusion_matrix(train_labels,train_pred)
 '''
 
+'''
 test_pred = np.load('test_pred_'+modelT+"_"+typ+'.npy')
 rem = test_generator.n % test_generator.batch_size
 test_labels = test_generator.classes[:-rem]
@@ -151,12 +164,16 @@ print("Testing Accuracy is "+str(acc))
 
 val_pred = np.load('val_pred_'+modelT+"_"+typ+'.npy')
 val_labels = val_generator.classes
+rem = val_generator.n % val_generator.batch_size
+val_labels = val_generator.classes[:-rem]
 print(val_labels[:10])
 val_pred = np.argmax(val_pred, axis=-1)
 print(val_pred[:10])
 np.savetxt("val_pred_max_"+typ+".txt",val_pred)
 acc = sum(val_pred==val_labels)/len(val_pred)
 print("Validation Accuracy is "+str(acc))
+'''
+
 '''
 #label_map has class name keys and index of the output vector as values
 train_label_map = train_generator.class_indices
