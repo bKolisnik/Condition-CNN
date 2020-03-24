@@ -161,7 +161,7 @@ acc = sum(train_pred==train_labels)/len(train_pred)
 print("Training Accuracy is "+str(acc))
 
 confusion_matrix(train_labels,train_pred)
-'''
+
 
 '''
 test_pred = np.load('test_pred_'+modelT+"_"+typ+'.npy')
