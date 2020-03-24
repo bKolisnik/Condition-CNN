@@ -71,7 +71,7 @@ val_df = pd.read_csv("fashion_product_validation.csv")
 
 
 
-test_datagen = ImageDataGenerator(rescale = 1./255)
+test_datagen = ImageDataGenerator()
 test_generator = test_datagen.flow_from_dataframe(
         dataframe=test_df,
         directory=direc,
@@ -122,11 +122,12 @@ def save_predictions():
     np.save('val_pred_'+modelT+"_"+typ+'.npy', val_pred)
 
 #check if predictions already made
-'''
+
 if not os.path.isfile('val_pred_'+modelT+"_"+typ+'.npy'):
     save_predictions()
-'''
 
+
+'''
 imgs=[]
 full_size_image = cv2.imread(direc+"12431.jpg")
 resized = cv2.resize(full_size_image, target_size, interpolation=cv2.INTER_CUBIC)
