@@ -77,6 +77,7 @@ test_generator = test_datagen.flow_from_dataframe(
         directory=direc,
         x_col="filepath",
         y_col=modelT,
+        shuffle = False,
         target_size=target_size,
         batch_size=batch,
         class_mode='categorical')
@@ -95,6 +96,7 @@ val_generator = test_datagen.flow_from_dataframe(
     directory=direc,
     x_col="filepath",
     y_col=modelT,
+    shuffle = False,
     target_size=target_size,
     batch_size=batch,
     class_mode='categorical')
@@ -128,6 +130,8 @@ if not os.path.isfile('val_pred_'+modelT+"_"+typ+'.npy'):
 
 
 '''
+
+This worked. All of the predictions are correct.
 imgs=[]
 full_size_image = cv2.imread(direc+"12431.jpg")
 resized = cv2.resize(full_size_image, target_size, interpolation=cv2.INTER_CUBIC)
