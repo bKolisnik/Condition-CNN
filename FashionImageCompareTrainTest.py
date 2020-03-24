@@ -9,7 +9,6 @@ from sklearn.metrics import confusion_matrix
 
 import cv2
 
-from glob import glob
 
 '''This module takes in a trained model and compares it's predictions on each dataset
 then output confusion matrices for each dataset so you can see why the model is performing well on train but poorly on test.'''
@@ -168,8 +167,9 @@ confusion_matrix(train_labels,train_pred)
 
 '''
 test_pred = np.load('test_pred_'+modelT+"_"+typ+'.npy')
-rem = test_generator.n % test_generator.batch_size
-test_labels = test_generator.classes[:-rem]
+#rem = test_generator.n % test_generator.batch_size
+#test_labels = test_generator.classes[:-rem]
+test_labels = test_generator.classes
 print(test_generator.class_indices)
 print("# labels:",len(test_labels))
 print("Test Labels: ")
@@ -184,8 +184,8 @@ print("Testing Accuracy is "+str(acc))
 
 val_pred = np.load('val_pred_'+modelT+"_"+typ+'.npy')
 val_labels = val_generator.classes
-rem = val_generator.n % val_generator.batch_size
-val_labels = val_generator.classes[:-rem]
+#rem = val_generator.n % val_generator.batch_size
+#val_labels = val_generator.classes[:-rem]
 print(val_labels[:10])
 val_pred = np.argmax(val_pred, axis=-1)
 print(val_pred[:10])
