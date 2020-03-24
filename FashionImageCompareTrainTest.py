@@ -134,6 +134,9 @@ imgs = np.array([resized])
 
 test_pred = model.predict(x=imgs)
 print(test_pred)
+
+print(np.argmax(test_pred))
+
 '''
 #predict returns the 2d array where each sample returns a vector of predictions.
 train_pred = np.load('train_pred_'+modelT+"_"+typ+'.npy')
