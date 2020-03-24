@@ -76,7 +76,7 @@ test_generator = test_datagen.flow_from_dataframe(
         target_size=target_size,
         batch_size=batch,
         class_mode='categorical')
-
+'''
 train_generator = test_datagen.flow_from_dataframe(
     dataframe=train_df,
     directory=direc,
@@ -85,6 +85,7 @@ train_generator = test_datagen.flow_from_dataframe(
     target_size=target_size,
     batch_size=batch,
     class_mode='categorical')
+    '''
 val_generator = test_datagen.flow_from_dataframe(
     dataframe=val_df,
     directory=direc,
@@ -106,12 +107,12 @@ def save_predictions():
     np.save('train_pred_'+modelT+"_"+typ+'.npy',train_pred)
     '''
     STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
-    test_pred = model.predict(x=test_generator,steps=STEP_SIZE_TEST)
+    test_pred = model.predict(x=test_generator)
 
     np.save('test_pred_'+modelT+"_"+typ+'.npy',test_pred)
 
     STEP_SIZE_VAL = val_generator.n // val_generator.batch_size
-    val_pred = model.predict(x=val_generator,steps=STEP_SIZE_VAL)
+    val_pred = model.predict(x=val_generator)
 
     np.save('val_pred_'+modelT+"_"+typ+'.npy', val_pred)
 
