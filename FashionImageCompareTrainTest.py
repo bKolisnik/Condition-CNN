@@ -130,7 +130,9 @@ if not os.path.isfile('val_pred_'+modelT+"_"+typ+'.npy'):
 full_size_image = cv2.imread(direc+"12431.jpg")
 resized = cv2.resize(full_size_image, target_size, interpolation=cv2.INTER_CUBIC)
 
-test_pred = model.predict(x=resized)
+imgs = np.array(resized)
+
+test_pred = model.predict(x=imgs)
 print(test_pred)
 '''
 #predict returns the 2d array where each sample returns a vector of predictions.
