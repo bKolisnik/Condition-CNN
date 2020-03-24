@@ -127,6 +127,7 @@ if not os.path.isfile('val_pred_'+modelT+"_"+typ+'.npy'):
     save_predictions()
 '''
 
+imgs=[]
 full_size_image = cv2.imread(direc+"12431.jpg")
 resized = cv2.resize(full_size_image, target_size, interpolation=cv2.INTER_CUBIC)
 imgs.append(resized)
