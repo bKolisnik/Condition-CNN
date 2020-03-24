@@ -15,10 +15,17 @@ from tensorflow.keras.optimizers import SGD
 class ArticleType:
     '''One parameter model which is a keras model'''
 
-    def __init__(self):
-        # Download the architecture of ResNet50 with ImageNet weights
-        base_model = ResNet50(include_top=False, weights='imagenet')
+    def __init__(self,typ):
 
+        # Download the architecture of ResNet50 with ImageNet weights
+        if (typ == 'vgg'):
+            base_model = VGG16(include_top=False, weights='imagenet')
+        elif (typ == 'inception'):
+            base_model = InceptionV3(include_top=False, weights=None)
+        elif (typ == 'resnet'):
+            base_model = ResNet50(include_top=False, weights=None)
+
+        base_model = ResNet50(include_top=False, weights=None)
         # Taking the output of the last convolution block in ResNet50
         x = base_model.output
 
@@ -39,12 +46,18 @@ class ArticleType:
         model = Model(inputs=base_model.input, outputs=predictions)
         #print(model.summary())
 
-        # Training only top layers i.e. the layers which we have added in the end
+        if (typ == 'vgg'):
+            for layer in base_model.layers[:-2]:
+                layer.trainable = False
 
-        for layer in base_model.layers:
-            layer.trainable = False
+            # trainable_params = tf.keras.backend.count_params(model.trainable_weights)
+            # print("Trainable paramaters: "+str(trainable_params))
 
+        print("Layers: " + str(len(base_model.layers)))
+        # print(model.summary())
         # Compiling the model
-        model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
+        # KEras will automaticall use categorical accuracy when accuracy is used.
+        model.compile(optimizer=SGD(lr=0.001, momentum=0.9), loss='categorical_crossentropy',
+                      metrics=['categorical_accuracy'])
 
         self.model = model
