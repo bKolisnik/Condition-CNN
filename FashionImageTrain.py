@@ -178,11 +178,11 @@ except ValueError as v:
     print(v)
 # Saving the weights in the current directory
 if modelT=='masterCategory':
-    model.save_weights("Fashion_pretrain_resnet50_MasterCategory_"+typ+".h5")
+    model.save_weights("Fashion_pretrain_MasterCategory_"+typ+".h5")
 elif modelT=='subCategory':
-    model.save_weights("Fashion_pretrain_resnet50_SubCategory_"+typ+".h5")
+    model.save_weights("Fashion_pretrain_SubCategory_"+typ+".h5")
 elif modelT=='articleType':
-    model.save_weights("Fashion_pretrain_resnet50_ArticleType+"+typ+".h5")
+    model.save_weights("Fashion_pretrain_ArticleType+"+typ+".h5")
 
 try:
     print("Test generator n", test_generator.n)

@@ -50,9 +50,9 @@ elif(typ=='resnet'):
 if modelT=='masterCategory':
     model.load_weights("Fashion_pretrain_resnet50_MasterCategory_"+typ+".h5")
 elif modelT=='subCategory':
-    model.load_weights("Fashion_pretrain_resnet50_SubCategory_"+typ+".h5")
+    model.load_weights("Fashion_pretrain_SubCategory_"+typ+".h5")
 elif modelT=='articleType':
-    model.load_weights("Fashion_pretrain_resnet50_ArticleType+"+typ+".h5")
+    model.load_weights("Fashion_pretrain_ArticleType+"+typ+".h5")
 #load the weights
 
 
@@ -92,7 +92,7 @@ print("Validation Generator n",val_generator.n)
 print("Test generator batch size",val_generator.batch_size)
 STEP_SIZE_VAL=val_generator.n//val_generator.batch_size
 print(model.evaluate(x=val_generator,
-        steps=STEP_SIZE_VAL))
+        steps=STEP_SIZE_VAL,verbose=1))
 
 
 #get model predictions into 1D tensor

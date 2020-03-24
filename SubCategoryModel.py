@@ -60,6 +60,6 @@ class SubCategory:
         print("Layers: " + str(len(base_model.layers)))
         print(model.summary())
         # Compiling the model
-        model.compile(optimizer=SGD(lr=0.001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
+        model.compile(optimizer=SGD(lr=0.001, momentum=0.9), loss='categorical_crossentropy', metrics=['categorical_accuracy'])
 
         self.model = model

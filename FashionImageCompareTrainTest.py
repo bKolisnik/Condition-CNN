@@ -56,9 +56,9 @@ elif(typ=='resnet'):
 if modelT=='masterCategory':
     model.load_weights("Fashion_pretrain_resnet50_MasterCategory_"+typ+".h5")
 elif modelT=='subCategory':
-    model.load_weights("Fashion_pretrain_resnet50_SubCategory_"+typ+".h5")
+    model.load_weights("Fashion_pretrain_SubCategory_"+typ+".h5")
 elif modelT=='articleType':
-    model.load_weights("Fashion_pretrain_resnet50_ArticleType+"+typ+".h5")
+    model.load_weights("Fashion_pretrain_ArticleType+"+typ+".h5")
 
 
 test_df = pd.read_csv("fashion_product_test.csv")
