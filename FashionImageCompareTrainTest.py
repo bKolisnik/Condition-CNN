@@ -135,7 +135,8 @@ confusion_matrix(train_labels,train_pred)
 '''
 
 test_pred = np.load('test_pred_'+modelT+"_"+typ+'.npy')
-test_labels = test_generator.classes
+rem = test_generator.n % test_generator.batch_size
+test_labels = test_generator.classes[:-rem]
 print(test_generator.class_indices)
 print("# labels:",len(test_labels))
 print("Test Labels: ")
