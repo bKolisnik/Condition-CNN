@@ -70,8 +70,8 @@ val_df = pd.read_csv("fashion_product_validation.csv")
 
 
 
-#test_datagen = ImageDataGenerator(rescale=1. / 255)
-test_datagen = ImageDataGenerator()
+test_datagen = ImageDataGenerator(rescale=1. / 255)
+#test_datagen = ImageDataGenerator()
 test_generator = test_datagen.flow_from_dataframe(
         dataframe=test_df,
         directory=direc,
