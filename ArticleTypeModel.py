@@ -1,9 +1,12 @@
 # Importing the important libraries
 import tensorflow as tf
 from tensorflow.keras.applications.resnet50 import ResNet50
-from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
+from tensorflow.keras.applications.vgg16 import VGG16
+from tensorflow.keras.applications.inception_v3 import InceptionV3
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, Flatten
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import SGD
+import sys
 
 
 # print(tf.test.is_gpu_available())
