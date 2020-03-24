@@ -138,7 +138,7 @@ imgs.append(resized)
 
 full_size_image = cv2.imread(direc+"17779.jpg")
 resized = cv2.resize(full_size_image, target_size, interpolation=cv2.INTER_CUBIC)
-
+imgs.append(resized)
 
 #imgs = np.array([resized])
 imgs = np.array(imgs)
