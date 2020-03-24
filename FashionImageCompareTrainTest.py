@@ -150,6 +150,8 @@ print(test_pred)
 print(np.argmax(test_pred,axis=-1))
 
 '''
+
+'''
 #predict returns the 2d array where each sample returns a vector of predictions.
 train_pred = np.load('train_pred_'+modelT+"_"+typ+'.npy')
 #train_labels = train_df[modelT].values
@@ -189,7 +191,7 @@ print(val_pred[:10])
 np.savetxt("val_pred_max_"+typ+".txt",val_pred)
 acc = sum(val_pred==val_labels)/len(val_pred)
 print("Validation Accuracy is "+str(acc))
-'''
+
 
 '''
 #label_map has class name keys and index of the output vector as values
