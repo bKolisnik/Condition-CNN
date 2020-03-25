@@ -34,11 +34,13 @@ class ArticleType:
 
         # Adding a Global Average Pooling layer
         #x = GlobalAveragePooling2D()(x)
-        x = Flatten()(x)
+        x = Flatten(data_format=channels_first)(x)
 
+        print(x.input_shape)
+        print(x.output_shape)
         # Adding a fully connected layer having 1024 neurons
-        x = Dense(1024, activation='relu')(x)
-        x = Dense(1024, activation='relu')(x)
+        x = Dense(4096, activation='relu')(x)
+        x = Dense(4096, activation='relu')(x)
         # Adding a fully connected layer having 45 neurons which will
         # 1 for each class of subcategory
         # only 44 classes that work in the dataset.

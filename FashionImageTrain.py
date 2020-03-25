@@ -182,7 +182,7 @@ if modelT=='masterCategory':
 elif modelT=='subCategory':
     model.save_weights("Fashion_pretrain_SubCategory_"+typ+".h5")
 elif modelT=='articleType':
-    model.save_weights("Fashion_pretrain_ArticleType+"+typ+".h5")
+    model.save_weights("Fashion_pretrain_ArticleType_"+typ+".h5")
 
 try:
     print("Test generator n", test_generator.n)
