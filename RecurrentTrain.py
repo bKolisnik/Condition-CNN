@@ -150,13 +150,11 @@ val_generator = get_flow_from_dataframe(test_datagen,dataframe=val_df,image_shap
 # apparently validation-data needs to be the actual dataset?
 
 try:
-    STEP_SIZE_TRAIN = train_generator.n // train_generator.batch_size
-    STEP_SIZE_VALID = val_generator.n // val_generator.batch_size
+    #STEP_SIZE_TRAIN = train_generator.n // train_generator.batch_size
+    #STEP_SIZE_VALID = val_generator.n // val_generator.batch_size
     model.fit_generator(train_generator,
-                        steps_per_epoch=STEP_SIZE_TRAIN,
                         epochs=epochs,
-                        validation_data=val_generator,
-                        validation_steps=STEP_SIZE_VALID)
+                        validation_data=val_generator,)
     print("Finished training")
 except ValueError as v:
     print(v)
