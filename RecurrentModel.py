@@ -115,7 +115,7 @@ class RecurrentTrain:
         #combinedC = concatenate([z, modelB.output])
 
         combinedC = concatenate([z, input_sub])
-        z = Dense(21, activation='softmax',name="article_output")(combinedC)
+        z = Dense(45, activation='softmax',name="article_output")(combinedC)
 
         # Model to be trained
         #modelC = Model(inputs=[input_image,input_master,input_sub], outputs=z)
