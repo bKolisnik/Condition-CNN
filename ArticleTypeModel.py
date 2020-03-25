@@ -32,15 +32,16 @@ class ArticleType:
         # Taking the output of the last convolution block in ResNet50
         x = base_model.output
 
+
         # Adding a Global Average Pooling layer
-        #x = GlobalAveragePooling2D()(x)
-        x = Flatten()(x)
+        x = GlobalAveragePooling2D()(x)
+        #x = Flatten()(x)
 
         #print(x.shape)
         #print(x.output_shape)
         # Adding a fully connected layer having 1024 neurons
-        x = Dense(4096, activation='relu')(x)
-        x = Dense(4096, activation='relu')(x)
+        x = Dense(1024, activation='relu')(x)
+        x = Dense(1024, activation='relu')(x)
         # Adding a fully connected layer having 45 neurons which will
         # 1 for each class of subcategory
         # only 44 classes that work in the dataset.
@@ -53,7 +54,7 @@ class ArticleType:
         #print(model.summary())
 
         if (typ == 'vgg'):
-            for layer in base_model.layers[:-4]:
+            for layer in base_model.layers[:-3]:
                 layer.trainable = False
 
             # trainable_params = tf.keras.backend.count_params(model.trainable_weights)
