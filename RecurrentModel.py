@@ -36,6 +36,7 @@ class RecurrentTrain:
 
         #rip out last couple layers of VGG
         last_maxpoolconfig = base_model.layers[-1].get_config()
+        print(last_maxpoolconfig)
         last_convconfig = base_model.layers[-2].get_config()
         seclast_convconfig = base_model.layers[-3].get_config()
 
