@@ -28,7 +28,7 @@ class ArticleType:
         elif (typ == 'resnet'):
             base_model = ResNet50(include_top=False, weights=None)
 
-        base_model = ResNet50(include_top=False, weights=None)
+        #base_model = ResNet50(include_top=False, weights=None)
         # Taking the output of the last convolution block in ResNet50
         x = base_model.output
 
@@ -36,8 +36,8 @@ class ArticleType:
         #x = GlobalAveragePooling2D()(x)
         x = Flatten(data_format='channels_first')(x)
 
-        print(x.input_shape)
-        print(x.output_shape)
+        #print(x.shape)
+        #print(x.output_shape)
         # Adding a fully connected layer having 1024 neurons
         x = Dense(4096, activation='relu')(x)
         x = Dense(4096, activation='relu')(x)
