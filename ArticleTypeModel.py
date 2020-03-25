@@ -20,7 +20,7 @@ class ArticleType:
 
     def __init__(self,typ):
 
-        final_input = Input(shape=(3, 224, 224))
+        final_input = Input(shape=(224, 224, 3))
 
         # Download the architecture of ResNet50 with ImageNet weights
         if (typ == 'vgg'):
