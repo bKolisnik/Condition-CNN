@@ -20,20 +20,20 @@ class ArticleType:
 
     def __init__(self,typ):
 
-        final_input = Input(shape=(224, 224, 3))
+        #final_input = Input(shape=(224, 224, 3))
 
         # Download the architecture of ResNet50 with ImageNet weights
         if (typ == 'vgg'):
-            base_model = VGG16(include_top=False, weights='imagenet')
+            base_model = VGG16(include_top=False, weights='imagenet', input_shape= (224, 224, 3))
         elif (typ == 'inception'):
             base_model = InceptionV3(include_top=False, weights=None)
         elif (typ == 'resnet'):
             base_model = ResNet50(include_top=False, weights=None)
 
-        #base_model = ResNet50(include_top=False, weights=None)
+        base_model = ResNet50(include_top=False, weights=None)
         # Taking the output of the last convolution block in ResNet50
-        #x = base_model.output
-        x = base_model(final_input)
+        x = base_model.output
+        #x = base_model(final_input)
 
         # Adding a Global Average Pooling layer
         x = GlobalAveragePooling2D()(x)
@@ -52,7 +52,7 @@ class ArticleType:
         predictions = Dense(45, activation='softmax')(x)
 
         # Model to be trained
-        model = Model(inputs=final_input, outputs=predictions)
+        model = Model(inputs=base_model.output, outputs=predictions)
         #print(model.summary())
 
         if (typ == 'vgg'):
