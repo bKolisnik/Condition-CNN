@@ -40,7 +40,7 @@ class ArticleType:
         #print(x.shape)
         #print(x.output_shape)
         # Adding a fully connected layer having 1024 neurons
-        x = Dense(1024, activation='relu')(x)
+        #x = Dense(1024, activation='relu')(x)
         x = Dense(1024, activation='relu')(x)
         # Adding a fully connected layer having 45 neurons which will
         # 1 for each class of subcategory
