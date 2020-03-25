@@ -68,3 +68,10 @@ class ArticleType:
                       metrics=['categorical_accuracy'])
 
         self.model = model
+
+if __name__ == "__main__":
+
+    typ = sys.argv[1]
+
+    model = Master(typ).model
+    print(model.summary())
