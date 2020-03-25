@@ -34,7 +34,7 @@ class ArticleType:
 
         # Adding a Global Average Pooling layer
         #x = GlobalAveragePooling2D()(x)
-        x = Flatten(data_format=channels_first)(x)
+        x = Flatten(data_format='channels_first')(x)
 
         print(x.input_shape)
         print(x.output_shape)
