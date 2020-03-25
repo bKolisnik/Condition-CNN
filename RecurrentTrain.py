@@ -107,7 +107,7 @@ def get_flow_from_dataframe(generator, dataframe,
         y_col=['masterCategory','subCategory','articleType'],
         target_size=target_size,
         batch_size=batch,
-        class_mode='categorical')
+        class_mode='other')
 
     while True:
         x_1 = train_generator.next()
