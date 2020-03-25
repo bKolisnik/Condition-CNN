@@ -40,16 +40,25 @@ class RecurrentTrain:
         seclast_convconfig = base_model.layers[-3].get_config()
 
         maxpoolA = MaxPooling2D.from_config(last_maxpoolconfig)
+        maxpoolA.name='maxpoolA'
         seclast_convA = Conv2D.from_config(seclast_convconfig)
+        seclast_convA.name = 'seclast_convA'
         last_convA = Conv2D.from_config(last_convconfig)
+        last_convA.name='last_convA'
 
         maxpoolB = MaxPooling2D.from_config(last_maxpoolconfig)
+        maxpoolB.name = 'maxpoolB'
         seclast_convB = Conv2D.from_config(seclast_convconfig)
+        seclast_convB.name = 'seclast_convB'
         last_convB = Conv2D.from_config(last_convconfig)
+        last_convB.name = 'last_convB'
 
         maxpoolC = MaxPooling2D.from_config(last_maxpoolconfig)
+        maxpoolC.name = 'maxpoolC'
         seclast_convC = Conv2D.from_config(seclast_convconfig)
+        seclast_convC.name = 'seclast_convC'
         last_convC = Conv2D.from_config(last_convconfig)
+        last_convC.name = 'last_convC'
 
         #freeze majority of the base conv network
         if (typ == 'vgg'):
