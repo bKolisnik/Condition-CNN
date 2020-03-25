@@ -36,30 +36,33 @@ class RecurrentTrain:
 
         #rip out last couple layers of VGG
         last_maxpoolconfig = base_model.layers[-1].get_config()
+        last_maxpoolconfig['name']='maxpoolA'
         print(last_maxpoolconfig)
         last_convconfig = base_model.layers[-2].get_config()
+        last_convconfig['name'] = 'last_convA'
         seclast_convconfig = base_model.layers[-3].get_config()
+        seclast_convconfig['name']='seclast_convA'
 
         maxpoolA = MaxPooling2D.from_config(last_maxpoolconfig)
-        maxpoolA.name='maxpoolA'
         seclast_convA = Conv2D.from_config(seclast_convconfig)
-        seclast_convA.name = 'seclast_convA'
         last_convA = Conv2D.from_config(last_convconfig)
-        last_convA.name='last_convA'
+
+        last_maxpoolconfig['name'] = 'maxpoolB'
+        last_convconfig['name'] = 'last_convB'
+        seclast_convconfig['name'] = 'seclast_convB'
+
 
         maxpoolB = MaxPooling2D.from_config(last_maxpoolconfig)
-        maxpoolB.name = 'maxpoolB'
         seclast_convB = Conv2D.from_config(seclast_convconfig)
-        seclast_convB.name = 'seclast_convB'
         last_convB = Conv2D.from_config(last_convconfig)
-        last_convB.name = 'last_convB'
+
+        last_maxpoolconfig['name'] = 'maxpoolC'
+        last_convconfig['name'] = 'last_convC'
+        seclast_convconfig['name'] = 'seclast_convC'
 
         maxpoolC = MaxPooling2D.from_config(last_maxpoolconfig)
-        maxpoolC.name = 'maxpoolC'
         seclast_convC = Conv2D.from_config(seclast_convconfig)
-        seclast_convC.name = 'seclast_convC'
         last_convC = Conv2D.from_config(last_convconfig)
-        last_convC.name = 'last_convC'
 
         #freeze majority of the base conv network
         if (typ == 'vgg'):
