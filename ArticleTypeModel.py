@@ -24,13 +24,12 @@ class ArticleType:
 
         # Download the architecture of ResNet50 with ImageNet weights
         if (typ == 'vgg'):
-            base_model = VGG16(include_top=False, weights='imagenet', input_shape= (224, 224, 3))
+            base_model = VGG16(include_top=False, weights='imagenet', input_shape= (224,224,3))
         elif (typ == 'inception'):
             base_model = InceptionV3(include_top=False, weights=None)
         elif (typ == 'resnet'):
             base_model = ResNet50(include_top=False, weights=None)
 
-        base_model = ResNet50(include_top=False, weights=None)
         # Taking the output of the last convolution block in ResNet50
         x = base_model.output
         #x = base_model(final_input)
@@ -52,7 +51,7 @@ class ArticleType:
         predictions = Dense(45, activation='softmax')(x)
 
         # Model to be trained
-        model = Model(inputs=base_model.output, outputs=predictions)
+        model = Model(inputs=base_model.input, outputs=predictions)
         #print(model.summary())
 
         if (typ == 'vgg'):
