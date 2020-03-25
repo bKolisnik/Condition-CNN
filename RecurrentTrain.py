@@ -140,7 +140,7 @@ train_generator = get_flow_from_dataframe(train_datagen,dataframe=train_df,image
 
 test_generator = get_flow_from_dataframe(test_datagen,dataframe=test_df,image_shape=target_size,batch_size=batch)
 
-val_generator = get_flow_from_dataframe(test_datagen,dataframe=val_df,image_shape=target_szie,batch_size=batch)
+val_generator = get_flow_from_dataframe(test_datagen,dataframe=val_df,image_shape=target_size,batch_size=batch)
 
 
 
