@@ -73,5 +73,5 @@ if __name__ == "__main__":
 
     typ = sys.argv[1]
 
-    model = Master(typ).model
+    model = ArticleType(typ).model
     print(model.summary())
