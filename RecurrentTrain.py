@@ -107,14 +107,16 @@ def get_flow_from_dataframe(generator, dataframe,
         y_col=['masterCategory','subCategory','articleType'],
         target_size=target_size,
         batch_size=batch,
-        class_mode='other')
+        class_mode='categorical')
 
     while True:
         x_1 = train_generator.next()
         #x_2 = train_generator_2.next()
 
         print(x_1[1])
-        yield [x_1[0], x_1[1]], x_1[1]
+        yield [x_1[0], x_1[1][:,0], x_1[1][:,1]], x_1[1]
+
+        #should be list of length 3 and list of length 3
 
 
 

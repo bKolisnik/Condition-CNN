@@ -23,7 +23,11 @@ class RecurrentTrain:
 
         '''Three inputs to model for training, image, labels ,labels for teacher forcing'''
         input_image = Input(shape=(224,224,3))
+
+        #4 element vector
         input_master = Input(shape=(4))
+
+        #21 element vector
         input_sub = Input(shape=(21))
 
         # Download the architecture of ResNet50 with ImageNet weights
