@@ -161,7 +161,7 @@ def get_flow_from_dataframe(generator, dataframe,
 
         print(x_1[1][0])
         print(x_1[1][1])
-        yield [x_1[0], x_1[1][:,0], x_1[1][:,1]], x_1[1]
+        yield [x_1[0], x_1[1][0], x_1[1][1]], x_1[1]
 
         #should be list of length 3 and list of length 3
 
