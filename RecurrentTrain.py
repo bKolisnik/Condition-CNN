@@ -173,7 +173,7 @@ def get_flow_from_dataframe(generator, dataframe,
 
         #y = np.concatenate(x_1[1],axis=1)
         #print(y.shape)
-        yield [x_1[0], x_1[1][0], x_1[1][1]], x_1[1]
+        yield [x_1[0], x_1[1][0], x_1[1][1]], [x_1[1][0],x_1[1][1],x_1[1][2]]
 
         #should be list of length 3 and list of length 3
 
