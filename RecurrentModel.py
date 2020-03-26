@@ -133,7 +133,7 @@ class RecurrentTrain:
 
         model = Model(
             inputs=[input_image,input_sub,input_master],
-            outputs=[x, y, z],)
+            outputs=[x, y, z])
 
         losses = {
             "master_output": "categorical_crossentropy",
