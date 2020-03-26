@@ -125,7 +125,7 @@ test_df['articleTypeOneHot'] = onehot_master.tolist()
 
 
 
-print(df_train.head())
+print(train_df.head())
 
 
 
