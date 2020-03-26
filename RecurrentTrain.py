@@ -74,9 +74,9 @@ elif(typ=='resnet'):
     target_size = (224, 224)
 
 
-train_df = pd.read_csv("fashion_product_train.csv")
-val_df = pd.read_csv("fashion_product_validation.csv")
-test_df = pd.read_csv("fashion_product_test.csv")
+train_df = pd.read_csv("fashion_product_train_full.csv")
+val_df = pd.read_csv("fashion_product_validation_full.csv")
+test_df = pd.read_csv("fashion_product_test_full.csv")
 
 print(test_df.groupby("masterCategory").count()['id'])
 print(train_df.groupby("masterCategory").count()['id'])
