@@ -113,7 +113,7 @@ def get_flow_from_dataframe(generator, dataframe,
         x_1 = train_generator.next()
         #x_2 = train_generator_2.next()
 
-        print(x_1[1])
+        print(x_1[1].shape)
         yield [x_1[0], x_1[1][:,0], x_1[1][:,1]], x_1[1]
 
         #should be list of length 3 and list of length 3
