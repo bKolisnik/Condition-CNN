@@ -165,7 +165,13 @@ def get_flow_from_dataframe(generator, dataframe,
         print(type(x_1[1][1]))
         #the y must not be a list of numpy arrays but rather a true numpy array.
         #y = np.split(x_1[1],[4,26],axis=1)
-        print(type(x_1[1]))
+
+        #type of x_1[1] is a list! it is a list of 3 np arrays this may be the problem.
+        print(x_1[1][0].shape)
+        print(x_1[1][1].shape)
+        print(x_1[1][2].shape)
+
+
         yield [x_1[0], x_1[1][0], x_1[1][1]], x_1[1]
 
         #should be list of length 3 and list of length 3
