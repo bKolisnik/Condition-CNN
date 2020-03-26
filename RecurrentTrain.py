@@ -63,8 +63,8 @@ print("For " + str(epochs) + " epochs.")
 print("Batch size " + str(batch))
 
 
-from ArticleTypeModel import ArticleType
-model = ArticleType(typ).model
+from RecurrentModel import RecurrentTrain
+model = RecurrentTrain(typ).model
 
 if(typ=='vgg'):
     target_size=(224,224)
