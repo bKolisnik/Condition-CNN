@@ -215,7 +215,7 @@ try:
     #STEP_SIZE_VALID = val_generator.n // val_generator.batch_size
     model.fit_generator(train_generator,
                         epochs=epochs,
-                        validation_data=val_generator,)
+                        validation_data=val_generator)
     print("Finished training")
 except ValueError as v:
     print(v)
