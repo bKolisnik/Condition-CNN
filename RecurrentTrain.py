@@ -79,6 +79,27 @@ train_df = pd.read_csv("fashion_product_train_full.csv")
 val_df = pd.read_csv("fashion_product_validation_full.csv")
 test_df = pd.read_csv("fashion_product_test_full.csv")
 
+
+lblmapsub = {'Bags': 0, 'Belts': 1, 'Bottomwear': 2, 'Dress': 3, 'Eyewear': 4, 'Flip Flops': 5, 'Fragrance': 6, 'Headwear': 7, 'Innerwear': 8, 'Jewellery': 9, 'Lips': 10, 'Loungewear and Nightwear': 11, 'Nails': 12, 'Sandal': 13, 'Saree': 14, 'Shoes': 15, 'Socks': 16, 'Ties': 17, 'Topwear': 18, 'Wallets': 19, 'Watches': 20}
+
+lblmaparticle = {'Backpacks': 0, 'Belts': 1, 'Bra': 2, 'Briefs': 3, 'Capris': 4, 'Caps': 5, 'Casual Shoes': 6, 'Clutches': 7, 'Deodorant': 8, 'Dresses': 9, 'Earrings': 10, 'Flats': 11, 'Flip Flops': 12, 'Formal Shoes': 13, 'Handbags': 14, 'Heels': 15, 'Innerwear Vests': 16, 'Jackets': 17, 'Jeans': 18, 'Kurtas': 19, 'Kurtis': 20, 'Leggings': 21, 'Lipstick': 22, 'Nail Polish': 23, 'Necklace and Chains': 24, 'Nightdress': 25, 'Pendant': 26, 'Perfume and Body Mist': 27, 'Sandals': 28, 'Sarees': 29, 'Shirts': 30, 'Shorts': 31, 'Socks': 32, 'Sports Shoes': 33, 'Sunglasses': 34, 'Sweaters': 35, 'Sweatshirts': 36, 'Ties': 37, 'Tops': 38, 'Track Pants': 39, 'Trousers': 40, 'Tshirts': 41, 'Tunics': 42, 'Wallets': 43, 'Watches': 44}
+
+lblmapmaster = {'Accessories': 0, 'Apparel': 1, 'Footwear': 2, 'Personal Care': 3}
+
+train_df['masterCategory'].replace(lblmapmaster,inplace=True)
+test_df['masterCategory'].replace(lblmapmaster,inplace=True)
+val_df['masterCategory'].replace(lblmapmaster,inplace=True)
+
+train_df['subCategory'].replace(lblmapsub,inplace=True)
+test_df['subCategory'].replace(lblmapsub,inplace=True)
+val_df['subCategory'].replace(lblmapsub,inplace=True)
+
+train_df['articleType'].replace(lblmaparticle,inplace=True)
+test_df['articleType'].replace(lblmaparticle,inplace=True)
+val_df['articleType'].replace(lblmaparticle,inplace=True)
+
+#to_categorical converts class vector to binary matrix.
+
 onehot_master = to_categorical(train_df['masterCategory'].values)
 train_df['masterCategoryOneHot'] = onehot_master.tolist()
 onehot_master = to_categorical(val_df['masterCategory'].values)
