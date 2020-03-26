@@ -18,6 +18,7 @@ import os
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 # Any results you write to the current directory are saved as output.
+from tensorflow.keras.utils import to_categorical
 
 print(os.getcwd())
 
@@ -78,9 +79,33 @@ train_df = pd.read_csv("fashion_product_train_full.csv")
 val_df = pd.read_csv("fashion_product_validation_full.csv")
 test_df = pd.read_csv("fashion_product_test_full.csv")
 
-print(test_df.groupby("masterCategory").count()['id'])
-print(train_df.groupby("masterCategory").count()['id'])
-print(val_df.groupby("masterCategory").count()['id'])
+onehot_master = to_categorical(train_df['masterCategory'].values)
+train_df['masterCategoryOneHot'] = onehot_master.tolist()
+onehot_master = to_categorical(val_df['masterCategory'].values)
+val_df['masterCategoryOneHot'] = onehot_master.tolist()
+onehot_master = to_categorical(test_df['masterCategory'].values)
+test_df['masterCategoryOneHot'] = onehot_master.tolist()
+
+onehot_master = to_categorical(train_df['subCategory'].values)
+train_df['subCategoryOneHot'] = onehot_master.tolist()
+onehot_master = to_categorical(val_df['subCategory'].values)
+val_df['subCategoryOneHot'] = onehot_master.tolist()
+onehot_master = to_categorical(test_df['subCategory'].values)
+test_df['subCategoryOneHot'] = onehot_master.tolist()
+
+onehot_master = to_categorical(train_df['articleType'].values)
+train_df['articleTypeOneHot'] = onehot_master.tolist()
+onehot_master = to_categorical(val_df['articleType'].values)
+val_df['articleTypeOneHot'] = onehot_master.tolist()
+onehot_master = to_categorical(test_df['articleType'].values)
+test_df['articleTypeOneHot'] = onehot_master.tolist()
+
+
+
+
+
+print(df_train.head())
+
 
 
 
@@ -104,16 +129,17 @@ def get_flow_from_dataframe(generator, dataframe,
         dataframe=dataframe,
         directory=direc,
         x_col="filepath",
-        y_col='targets',
+        y_col=['masterCategoryOneHot','subCategoryOneHot','articleTypeOneHot'],
         target_size=target_size,
         batch_size=batch,
-        class_mode='categorical')
+        class_mode='multi_output')
 
     while True:
         x_1 = train_generator.next()
         #x_2 = train_generator_2.next()
 
         print(x_1[1].shape)
+        print(x_1[1])
         yield [x_1[0], x_1[1][:,0], x_1[1][:,1]], x_1[1]
 
         #should be list of length 3 and list of length 3
