@@ -104,7 +104,7 @@ def get_flow_from_dataframe(generator, dataframe,
         dataframe=dataframe,
         directory=direc,
         x_col="filepath",
-        y_col=['masterCategory','subCategory','articleType'],
+        y_col=['targets'],
         target_size=target_size,
         batch_size=batch,
         class_mode='categorical')
