@@ -132,7 +132,7 @@ class RecurrentTrain:
         # KEras will automatically use categorical accuracy when accuracy is used.
 
         model = Model(
-            inputs=[input_image,input_sub,input_master],
+            inputs=[input_image,input_master,input_sub],
             outputs=[x, y, z])
 
         losses = {
