@@ -45,7 +45,7 @@ args = dict(zip(arg_names, sys.argv))
 if args.get('epochs') is not None:
     epochs = int(args['epochs'])
 else:
-    epochs = 20
+    epochs = 6
 
 if(args.get('batch') is not None):
     batch = int(args['batch'])
@@ -146,7 +146,7 @@ def get_flow_from_dataframe(generator, dataframe,
                             image_shape=target_size,batch_size=batch):
 
     #return a dataframeiterator which yields tuples of (x, y) where x is numpy array of batch of images, y is np array of labels.
-    train_generator = generator.flow_from_dataframe(
+    g = generator.flow_from_dataframe(
         dataframe=dataframe,
         directory=direc,
         x_col="filepath",
@@ -156,24 +156,24 @@ def get_flow_from_dataframe(generator, dataframe,
         class_mode='multi_output')
 
     while True:
-        x_1 = train_generator.next()
+        x_1 = g.next()
         #x_2 = train_generator_2.next()
 
 
         #these are both numpy ndarrays
-        print(type(x_1[1][0]))
-        print(type(x_1[1][1]))
+        #print(type(x_1[1][0]))
+        #print(type(x_1[1][1]))
         #the y must not be a list of numpy arrays but rather a true numpy array.
         #y = np.split(x_1[1],[4,26],axis=1)
 
         #type of x_1[1] is a list! it is a list of 3 np arrays this may be the problem.
-        print(x_1[1][0].shape)
-        print(x_1[1][1].shape)
-        print(x_1[1][2].shape)
+        #print(x_1[1][0].shape)
+        #print(x_1[1][1].shape)
+        #print(x_1[1][2].shape)
 
         #y = np.concatenate(x_1[1],axis=1)
         #print(y.shape)
-        yield [x_1[0], x_1[1][0], x_1[1][1]], [x_1[1][0],x_1[1][1],x_1[1][2]]
+        yield [x_1[0], x_1[1][0], x_1[1][1]], x_1[1]
 
         #should be list of length 3 and list of length 3
 
@@ -220,9 +220,9 @@ try:
 except ValueError as v:
     print(v)
 # Saving the weights in the current directory
-model.save_weights("Fashion_pretrain_recurrent"+typ+".h5")
+model.save_weights("Fashion_pretrain_recurrent_"+typ+".h5")
 
-
+'''
 try:
     #print("Test generator n", test_generator.n)
     ##print("Test generator batch size", test_generator.batch_size)
@@ -231,5 +231,5 @@ try:
     model.evaluate(x=test_generator)
 except ValueError as v:
     print(v)
-
+'''
 
