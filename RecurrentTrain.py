@@ -141,7 +141,7 @@ train_datagen = ImageDataGenerator(rescale=1. / 255,
 
 test_datagen = ImageDataGenerator(rescale=1. / 255)
 
-train = train_generator.flow_from_dataframe(
+train = train_datagen.flow_from_dataframe(
         dataframe=train_df,
         directory=direc,
         x_col="filepath",
@@ -150,7 +150,7 @@ train = train_generator.flow_from_dataframe(
         batch_size=batch,
         class_mode='multi_output')
 
-val = test_generator.flow_from_dataframe(
+val = test_datagen.flow_from_dataframe(
         dataframe=val_df,
         directory=direc,
         x_col="filepath",
