@@ -141,10 +141,29 @@ train_datagen = ImageDataGenerator(rescale=1. / 255,
 
 test_datagen = ImageDataGenerator(rescale=1. / 255)
 
+train = train_generator.flow_from_dataframe(
+        dataframe=train_df,
+        directory=direc,
+        x_col="filepath",
+        y_col=['masterCategoryOneHot','subCategoryOneHot','articleTypeOneHot'],
+        target_size=target_size,
+        batch_size=batch,
+        class_mode='multi_output')
 
-def get_flow_from_dataframe(generator, dataframe,
+val = test_generator.flow_from_dataframe(
+        dataframe=val_df,
+        directory=direc,
+        x_col="filepath",
+        y_col=['masterCategoryOneHot','subCategoryOneHot','articleTypeOneHot'],
+        target_size=target_size,
+        batch_size=batch,
+        class_mode='multi_output')
+
+
+def get_flow_from_dataframe(g, dataframe,
                             image_shape=target_size,batch_size=batch):
 
+    '''
     #return a dataframeiterator which yields tuples of (x, y) where x is numpy array of batch of images, y is np array of labels.
     g = generator.flow_from_dataframe(
         dataframe=dataframe,
@@ -154,7 +173,7 @@ def get_flow_from_dataframe(generator, dataframe,
         target_size=target_size,
         batch_size=batch,
         class_mode='multi_output')
-
+    '''
     while True:
         x_1 = g.next()
         #x_2 = train_generator_2.next()
@@ -178,7 +197,7 @@ def get_flow_from_dataframe(generator, dataframe,
         #should be list of length 3 and list of length 3
 
 
-
+'''
 # Creating objects for image augmentations
 train_datagen = ImageDataGenerator(rescale=1. / 255,
                                    shear_range=0.1,
@@ -186,7 +205,7 @@ train_datagen = ImageDataGenerator(rescale=1. / 255,
                                    horizontal_flip=True)
 
 test_datagen = ImageDataGenerator(rescale=1. / 255)
-
+'''
 # Proving the path of training and test dataset
 # Setting the image input size as (224, 224)
 # We are using class mode as binary because there are only two classes in our data
@@ -197,11 +216,11 @@ test_datagen = ImageDataGenerator(rescale=1. / 255)
 # test_set = test_datagen.flow_from_directory('test_set',target_size = (224, 224),batch_size = 32,class_mode = 'categorical')
 
 
-train_generator = get_flow_from_dataframe(train_datagen,dataframe=train_df,image_shape=target_size,batch_size=batch)
+train_generator = get_flow_from_dataframe(train,dataframe=train_df,image_shape=target_size,batch_size=batch)
 
-test_generator = get_flow_from_dataframe(test_datagen,dataframe=test_df,image_shape=target_size,batch_size=batch)
+#test_generator = get_flow_from_dataframe(test_datagen,dataframe=test_df,image_shape=target_size,batch_size=batch)
 
-val_generator = get_flow_from_dataframe(test_datagen,dataframe=val_df,image_shape=target_size,batch_size=batch)
+val_generator = get_flow_from_dataframe(val,dataframe=val_df,image_shape=target_size,batch_size=batch)
 
 
 
@@ -211,11 +230,13 @@ val_generator = get_flow_from_dataframe(test_datagen,dataframe=val_df,image_shap
 # apparently validation-data needs to be the actual dataset?
 
 try:
-    #STEP_SIZE_TRAIN = train_generator.n // train_generator.batch_size
-    #STEP_SIZE_VALID = val_generator.n // val_generator.batch_size
+    STEP_SIZE_TRAIN = train.n // train.batch_size
+    STEP_SIZE_VALID = val.n // val.batch_size
     model.fit_generator(train_generator,
                         epochs=epochs,
-                        validation_data=val_generator)
+                        validation_data=val_generator,
+                        steps_per_epoch=STEP_SIZE_TRAIN,
+                        validation_steps=STEP_SIZE_VALID)
     print("Finished training")
 except ValueError as v:
     print(v)
