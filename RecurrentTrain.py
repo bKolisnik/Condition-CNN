@@ -63,7 +63,7 @@ print("For " + str(epochs) + " epochs.")
 print("Batch size " + str(batch))
 
 
-from RecurrentModel import RecurrentTrain
+from RecurrentModelFull import RecurrentTrain
 model = RecurrentTrain(typ).model
 
 if(typ=='vgg'):
