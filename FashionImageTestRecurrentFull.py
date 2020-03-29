@@ -58,7 +58,7 @@ if(args.get('batch') is not None):
 else:
     batch = 64
 
-print("Testing model " + modelT)
+
 print("Batch size " + str(batch))
 print("Type is "+typ)
 
