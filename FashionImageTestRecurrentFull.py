@@ -58,7 +58,10 @@ if(args.get('batch') is not None):
 else:
     batch = 64
 
-
+if(args.get('typ') is not None):
+    typ=args['typ']
+else:
+    typ = 'vgg'
 print("Batch size " + str(batch))
 print("Type is "+typ)
 
