@@ -235,7 +235,7 @@ class RecurrentTest:
 
         y = Dense(1024,activation='relu')(y)
         #use predictions for masterCategory
-        combinedB = concatenate([y,x])
+        combinedB = concatenate([y,x.output])
 
         y = Dense(21, activation='softmax',name="sub_output")(combinedB)
 
@@ -251,7 +251,7 @@ class RecurrentTest:
 
         z = Dense(1024, activation='relu')(z)
         #Use the predictions of the subCategory and masterCategory to inform decision.
-        combinedC = concatenate([z, y, x])
+        combinedC = concatenate([z, y.output, x.output])
         z = Dense(45, activation='softmax',name="article_output")(combinedC)
 
         # Model to be trained
