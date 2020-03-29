@@ -251,7 +251,8 @@ class RecurrentTest:
 
         z = Dense(1024, activation='relu')(z)
         #Use the predictions of the subCategory and masterCategory to inform decision.
-        print(tf.keras.backend.shape(y))
+        tf.keras.backend.print_tensor(x)
+        tf.keras.backend.print_tensor(y)
         print(tf.keras.backend.shape(x))
         combinedC = concatenate([z, y, x])
         z = Dense(45, activation='softmax',name="article_output")(combinedC)
