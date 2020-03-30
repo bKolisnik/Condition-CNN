@@ -238,7 +238,7 @@ class RecurrentTest:
 
         y = Dense(1024,activation='relu')(y)
         #use predictions for masterCategory
-        combinedB = concatenate([y,input_master])
+        combinedB = concatenate([y,x])
 
         y = Dense(21, activation='softmax',name="sub_output")(combinedB)
 
@@ -257,7 +257,7 @@ class RecurrentTest:
         print(tf.keras.backend.print_tensor(x))
         print(tf.keras.backend.print_tensor(y))
 
-        combinedC = concatenate([z, input_sub, input_master])
+        combinedC = concatenate([z, y, x])
         z = Dense(45, activation='softmax',name="article_output")(combinedC)
 
         # Model to be trained
