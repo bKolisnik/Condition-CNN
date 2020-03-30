@@ -72,12 +72,8 @@ model = RecurrentTest(typ).model
 model2 = RecurrentTrain(typ).model
 
 
-with open('modelComb.txt', 'w') as outfile:
-    json.dump(model.to_json(), outfile)
-
-
-with open('modelComb2.txt', 'w') as outfile:
-    json.dump(model2.to_json(), outfile)
+print(model.summary())
+print(model2.summary())
 
 if(typ=='vgg'):
     target_size=(224,224)
