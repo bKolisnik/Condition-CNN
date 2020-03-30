@@ -106,6 +106,39 @@ for layer in model2.get_weights():
     print(layer.shape)
 
 
+#swap block 1 and 2
+temp1 = weights[-14]
+temp2 = weights[-13]
+weights[-14] = weights[-12]
+weights[-13] = weights[-11]
+weights[-12] = temp1
+weights[-11] = temp2
+
+#put block 4 in storage, put block 3 into block 4
+temp1 = weights[-10]
+temp2 = weights[-9]
+weights[-10] = weights[-6]
+weights[-9] = weights[-5]
+
+#put block 5 int oblok 3
+weights[-6] = weights[-4]
+weights[-5] = weights[-3]
+
+#put block 6 into block 5
+weights[-4] = weights[-8]
+weights[-3] = weights[-7]
+
+#put block 4 into block 6
+weights[-8] = temp1
+weights[-7] = temp2
+
+model.set_weights(weights)
+
+print("model 1 weights correct order")
+for layer in model.get_weights():
+    print(layer.shape)
+
+
 
 test_datagen = ImageDataGenerator(rescale=1. / 255)
 
