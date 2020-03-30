@@ -140,6 +140,7 @@ temp2 = weights[-9]
 weights[-10] = weights[-8]
 weights[-9] = weights[-7]
 
+print("model 2 weights rearranged")
 for layer in weights:
     print(layer.shape)
 
