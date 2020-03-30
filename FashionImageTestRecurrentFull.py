@@ -99,6 +99,20 @@ elif(typ=='resnet'):
 model2.load_weights("Fashion_pretrain_recurrent_"+typ+".h5")
 #load the weights into model 2 then change the ordering of the weights
 
+
+
+names = [weight.name for layer in model.layers for weight in layer.weights]
+weights = model.get_weights()
+
+for name, weight in zip(names, weights):
+    print(name, weight.shape)
+
+names = [weight.name for layer in model2.layers for weight in layer.weights]
+weights = model.get_weights()
+
+for name, weight in zip(names, weights):
+    print(name, weight.shape)
+
 '''
 weights = model2.get_weights()
 
@@ -204,6 +218,7 @@ def get_flow_from_dataframe(g, dataframe,
         #print(y.shape)
         yield [x_1[0], x_1[1][0], x_1[1][1]], x_1[1]
 
+'''
 val_generator = get_flow_from_dataframe(val,dataframe=val_df,image_shape=target_size,batch_size=batch)
 test_generator = get_flow_from_dataframe(test,dataframe=test_df,image_shape=target_size,batch_size=batch)
 
@@ -219,3 +234,4 @@ print("Test generator batch size",val.batch_size)
 STEP_SIZE_VAL=val.n//val.batch_size
 print(model2.evaluate(x=val_generator,
         steps=STEP_SIZE_VAL,verbose=1))
+'''
