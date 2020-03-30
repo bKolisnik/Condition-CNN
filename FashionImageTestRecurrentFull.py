@@ -66,6 +66,7 @@ print("Batch size " + str(batch))
 print("Type is "+typ)
 
 from RecurrentModelFull import RecurrentTest
+from RecurrentModelFull import RecurrentTrain
 model = RecurrentTest(typ).model
 
 model2 = RecurrentTrain(typ).model
