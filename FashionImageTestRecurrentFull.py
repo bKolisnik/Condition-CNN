@@ -99,6 +99,7 @@ elif(typ=='resnet'):
 model2.load_weights("Fashion_pretrain_recurrent_"+typ+".h5")
 #load the weights into model 2 then change the ordering of the weights
 
+'''
 weights = model2.get_weights()
 
 print("model 2 weights")
@@ -131,9 +132,11 @@ weights[-3] = weights[-7]
 #put block 4 into block 6
 weights[-8] = temp1
 weights[-7] = temp2
-
+'''
 
 #test permutaions
+
+'''
 temp1 = weights[-14]
 temp2 = weights[-13]
 
@@ -141,10 +144,10 @@ weights[-14] = weights[-4]
 weights[-13] = weights[-3]
 weights[-4] = temp1
 weights[-3] = temp2
+'''
 
 
-
-
+'''
 print("model 2 weights rearranged")
 for layer in weights:
     print(layer.shape)
@@ -155,7 +158,7 @@ model.set_weights(weights)
 print("model 1 weights correct order")
 for layer in model.get_weights():
     print(layer.shape)
-
+'''
 
 
 test_datagen = ImageDataGenerator(rescale=1. / 255)
@@ -208,11 +211,11 @@ test_generator = get_flow_from_dataframe(test,dataframe=test_df,image_shape=targ
 print("Test generator n",test.n)
 print("Test generator batch size",test.batch_size)
 STEP_SIZE_TEST=test.n//test.batch_size
-print(model.evaluate(x=test_generator,
+print(model2.evaluate(x=test_generator,
         steps=STEP_SIZE_TEST))
 
 print("Validation Generator n",val.n)
 print("Test generator batch size",val.batch_size)
 STEP_SIZE_VAL=val.n//val.batch_size
-print(model.evaluate(x=val_generator,
+print(model2.evaluate(x=val_generator,
         steps=STEP_SIZE_VAL,verbose=1))
