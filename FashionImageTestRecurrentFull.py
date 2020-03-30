@@ -140,7 +140,8 @@ temp2 = weights[-9]
 weights[-10] = weights[-8]
 weights[-9] = weights[-7]
 
-
+for layer in weights:
+    print(layer.shape)
 
 
 model.set_weights(weights)
