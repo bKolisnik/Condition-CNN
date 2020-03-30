@@ -134,11 +134,11 @@ weights[-7] = temp2
 
 
 #test permutaions
-temp1 = weights[-4]
-temp2 = weights[-3]
+temp1 = weights[-14]
+temp2 = weights[-13]
 
-weights[-4] = weights[-8]
-weights[-3] = weights[-7]
+weights[-14] = weights[-8]
+weights[-13] = weights[-7]
 weights[-8] = temp1
 weights[-7] = temp2
 
