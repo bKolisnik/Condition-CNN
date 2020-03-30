@@ -129,8 +129,8 @@ val_generator = get_flow_from_dataframe(val,dataframe=val_df,image_shape=target_
 test_generator = get_flow_from_dataframe(test,dataframe=test_df,image_shape=target_size,batch_size=batch)
 
 
-print("Test generator n",test_generator.n)
-print("Test generator batch size",test_generator.batch_size)
+print("Test generator n",test.n)
+print("Test generator batch size",test.batch_size)
 STEP_SIZE_TEST=test.n//test.batch_size
 print(model.evaluate(x=test_generator,
         steps=STEP_SIZE_TEST))
