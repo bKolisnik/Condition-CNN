@@ -4,7 +4,7 @@ import numpy as np  # linear algebra
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 from tensorflow.keras.utils import to_categorical
 
-
+import json
 
 val_df = pd.read_csv("fashion_product_validation_full.csv")
 test_df = pd.read_csv("fashion_product_test_full.csv")
@@ -68,6 +68,16 @@ print("Type is "+typ)
 from RecurrentModelFull import RecurrentTest
 model = RecurrentTest(typ).model
 
+model2 = RecurrentTrain(typ).model
+
+
+with open('modelComb.txt', 'w') as outfile:
+    json.dump(model.to_json(), outfile)
+
+
+with open('modelComb2.txt', 'w') as outfile:
+    json.dump(model2.to_json(), outfile)
+
 if(typ=='vgg'):
     target_size=(224,224)
 elif(typ=='inception'):
@@ -75,6 +85,9 @@ elif(typ=='inception'):
 elif(typ=='resnet'):
     #resnet
     target_size = (224, 224)
+
+
+
 
 
 model.load_weights("Fashion_pretrain_recurrent_"+typ+".h5")
