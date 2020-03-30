@@ -95,7 +95,7 @@ val = test_datagen.flow_from_dataframe(
         class_mode='multi_output')
 
 
-test_generator = test_datagen.flow_from_dataframe(
+test = test_datagen.flow_from_dataframe(
         dataframe=test_df,
         directory=direc,
         x_col="filepath",
@@ -126,17 +126,17 @@ def get_flow_from_dataframe(g, dataframe,
         yield [x_1[0], x_1[1][0], x_1[1][1]], x_1[1]
 
 val_generator = get_flow_from_dataframe(val,dataframe=val_df,image_shape=target_size,batch_size=batch)
-test_generator = get_flow_from_dataframe(val,dataframe=test_df,image_shape=target_size,batch_size=batch)
+test_generator = get_flow_from_dataframe(test,dataframe=test_df,image_shape=target_size,batch_size=batch)
 
 
 print("Test generator n",test_generator.n)
 print("Test generator batch size",test_generator.batch_size)
-STEP_SIZE_TEST=test_generator.n//test_generator.batch_size
+STEP_SIZE_TEST=test.n//test.batch_size
 print(model.evaluate(x=test_generator,
         steps=STEP_SIZE_TEST))
 
-print("Validation Generator n",val_generator.n)
-print("Test generator batch size",val_generator.batch_size)
-STEP_SIZE_VAL=val_generator.n//val_generator.batch_size
+print("Validation Generator n",val.n)
+print("Test generator batch size",val.batch_size)
+STEP_SIZE_VAL=val.n//val.batch_size
 print(model.evaluate(x=val_generator,
         steps=STEP_SIZE_VAL,verbose=1))
