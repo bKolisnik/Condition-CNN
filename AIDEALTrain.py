@@ -26,7 +26,7 @@ import sys
 
 
 
-arg_names = ['filename', 'epochs','batch']
+arg_names = ['filename', 'typ','epochs','batch']
 args = dict(zip(arg_names, sys.argv))
 
 
