@@ -71,6 +71,7 @@ from RecurrentModelFull import RecurrentTrain
 
 model2 = RecurrentTrain(typ).model
 
+model = RecurrentTest(typ).model
 
 #print(model.summary())
 #print(model2.summary())
@@ -115,66 +116,68 @@ weights = model2.get_weights()
 for name, weight in zip(names, weights):
     print(name, weight.shape)
 
-'''
+
 weights = model2.get_weights()
 
-print("model 2 weights")
-for layer in model2.get_weights():
-    print(layer.shape)
 
 
-#swap block 1 and 2
-temp1 = weights[-14]
-temp2 = weights[-13]
-weights[-14] = weights[-12]
-weights[-13] = weights[-11]
-weights[-12] = temp1
-weights[-11] = temp2
+#swap block 1 and 3
+temp1 = weights[-24]
+temp2 = weights[-23]
+weights[-24] = weights[-20]
+weights[-23] = weights[-19]
+weights[-20] = temp1
+weights[-19] = temp2
 
-#put block 4 in storage, put block 3 into block 4
+#put block 2 in storage, put block 6 into block 2
+temp1 = weights[-22]
+temp2 = weights[-21]
+weights[-22] = weights[-14]
+weights[-21] = weights[-13]
+
+#put block 9 int oblok 6
+weights[-14] = weights[-8]
+weights[-13] = weights[-7]
+
+#put block 7 into block 9
+weights[-8] = weights[-12]
+weights[-7] = weights[-11]
+
+#put block 5 into block 7
+weights[-12] = weights[-16]
+weights[-11] = weights[-15]
+
+#put temp stored block 2 into block 5
+weights[-16] = temp1
+weights[-15] = temp2
+
+
+#put block 8 into temp storage
 temp1 = weights[-10]
 temp2 = weights[-9]
+
+#put block 10 into block 8
 weights[-10] = weights[-6]
 weights[-9] = weights[-5]
 
-#put block 5 int oblok 3
+#put block 11 into block 10
 weights[-6] = weights[-4]
 weights[-5] = weights[-3]
 
-#put block 6 into block 5
-weights[-4] = weights[-8]
-weights[-3] = weights[-7]
-
-#put block 4 into block 6
-weights[-8] = temp1
-weights[-7] = temp2
-'''
-
-#test permutaions
-
-'''
-temp1 = weights[-14]
-temp2 = weights[-13]
-
-weights[-14] = weights[-4]
-weights[-13] = weights[-3]
+#put block 2 from tmep storage into block 11
 weights[-4] = temp1
 weights[-3] = temp2
-'''
-
-
-'''
-print("model 2 weights rearranged")
-for layer in weights:
-    print(layer.shape)
 
 
 model.set_weights(weights)
 
-print("model 1 weights correct order")
-for layer in model.get_weights():
-    print(layer.shape)
-'''
+print(model.summary())
+names = [weight.name for layer in model.layers for weight in layer.weights]
+weights = model.get_weights()
+
+for name, weight in zip(names, weights):
+    print(name, weight.shape)
+
 
 
 test_datagen = ImageDataGenerator(rescale=1. / 255)
