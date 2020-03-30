@@ -132,6 +132,17 @@ weights[-3] = weights[-7]
 weights[-8] = temp1
 weights[-7] = temp2
 
+
+#test permutaions
+temp1 = weights[-10]
+temp2 = weights[-9]
+
+weights[-10] = weights[-8]
+weights[-9] = weights[-7]
+
+
+
+
 model.set_weights(weights)
 
 print("model 1 weights correct order")
