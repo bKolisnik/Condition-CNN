@@ -75,11 +75,11 @@ model2 = RecurrentTrain(typ).model
 #print(model.summary())
 #print(model2.summary())
 
-
+'''
 print("model 1 weights")
 for layer in model.get_weights():
     print(layer.shape)
-
+'''
 #print(model.get_weights().shape)
 #print(model2.get_weights().shape)
 
