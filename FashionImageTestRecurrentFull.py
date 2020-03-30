@@ -75,8 +75,17 @@ model2 = RecurrentTrain(typ).model
 #print(model.summary())
 #print(model2.summary())
 
-print(model.get_weights().shape)
-print(model2.get_weights().shape)
+
+print("model 1 weights")
+for layer in model.get_weights():
+    print(layer.shape)
+
+print("model 2 weights")
+for layer in model2.get_weights():
+    print(layer.shape)
+
+#print(model.get_weights().shape)
+#print(model2.get_weights().shape)
 
 
 if(typ=='vgg'):
