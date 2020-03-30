@@ -80,10 +80,6 @@ print("model 1 weights")
 for layer in model.get_weights():
     print(layer.shape)
 
-print("model 2 weights")
-for layer in model2.get_weights():
-    print(layer.shape)
-
 #print(model.get_weights().shape)
 #print(model2.get_weights().shape)
 
@@ -100,8 +96,14 @@ elif(typ=='resnet'):
 
 
 
-model.load_weights("Fashion_pretrain_recurrent_"+typ+".h5")
-#load the weights
+model2.load_weights("Fashion_pretrain_recurrent_"+typ+".h5")
+#load the weights into model 2 then change the ordering of the weights
+
+weights = model2.get_weights()
+
+print("model 2 weights")
+for layer in model2.get_weights():
+    print(layer.shape)
 
 
 
