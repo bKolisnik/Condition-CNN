@@ -110,7 +110,7 @@ for name, weight in zip(names, weights):
 '''
 print(model2.summary())
 names = [weight.name for layer in model2.layers for weight in layer.weights]
-weights = model.get_weights()
+weights = model2.get_weights()
 
 for name, weight in zip(names, weights):
     print(name, weight.shape)
