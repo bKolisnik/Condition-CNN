@@ -99,7 +99,7 @@ elif(typ=='resnet'):
 model2.load_weights("Fashion_pretrain_recurrent_"+typ+".h5")
 #load the weights into model 2 then change the ordering of the weights
 
-
+print(model.summary())
 
 names = [weight.name for layer in model.layers for weight in layer.weights]
 weights = model.get_weights()
@@ -107,6 +107,7 @@ weights = model.get_weights()
 for name, weight in zip(names, weights):
     print(name, weight.shape)
 
+print(model2.summary())
 names = [weight.name for layer in model2.layers for weight in layer.weights]
 weights = model.get_weights()
 
