@@ -172,11 +172,7 @@ weights[-3] = temp2
 model.set_weights(weights)
 
 print(model.summary())
-names = [weight.name for layer in model.layers for weight in layer.weights]
-weights = model.get_weights()
 
-for name, weight in zip(names, weights):
-    print(name, weight.shape)
 
 
 
@@ -223,7 +219,7 @@ def get_flow_from_dataframe(g, dataframe,
         #print(y.shape)
         yield [x_1[0], x_1[1][0], x_1[1][1]], x_1[1]
 
-'''
+
 val_generator = get_flow_from_dataframe(val,dataframe=val_df,image_shape=target_size,batch_size=batch)
 test_generator = get_flow_from_dataframe(test,dataframe=test_df,image_shape=target_size,batch_size=batch)
 
@@ -231,12 +227,11 @@ test_generator = get_flow_from_dataframe(test,dataframe=test_df,image_shape=targ
 print("Test generator n",test.n)
 print("Test generator batch size",test.batch_size)
 STEP_SIZE_TEST=test.n//test.batch_size
-print(model2.evaluate(x=test_generator,
+print(model.evaluate(x=test_generator,
         steps=STEP_SIZE_TEST))
 
 print("Validation Generator n",val.n)
 print("Test generator batch size",val.batch_size)
 STEP_SIZE_VAL=val.n//val.batch_size
-print(model2.evaluate(x=val_generator,
+print(model.evaluate(x=val_generator,
         steps=STEP_SIZE_VAL,verbose=1))
-'''
