@@ -72,8 +72,12 @@ model = RecurrentTest(typ).model
 model2 = RecurrentTrain(typ).model
 
 
-print(model.summary())
-print(model2.summary())
+#print(model.summary())
+#print(model2.summary())
+
+print(model.get_weights().shape)
+print(model2.get_weights().shape)
+
 
 if(typ=='vgg'):
     target_size=(224,224)
