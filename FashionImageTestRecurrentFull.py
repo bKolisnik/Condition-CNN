@@ -231,7 +231,7 @@ print(model.evaluate(x=test_generator,
         steps=STEP_SIZE_TEST))
 
 print("Validation Generator n",val.n)
-print("Test generator batch size",val.batch_size)
+print("Val generator batch size",val.batch_size)
 STEP_SIZE_VAL=val.n//val.batch_size
 print(model.evaluate(x=val_generator,
         steps=STEP_SIZE_VAL,verbose=1))
