@@ -164,6 +164,9 @@ class RecurrentTest:
         #21 element vector, not used
         input_sub = Input(shape=(21))
 
+        print(tf.keras.backend.print_tensor(input_master))
+        print(tf.keras.backend.print_tensor(input_sub))
+
         # Download the architecture of ResNet50 with ImageNet weights
         if (typ == 'vgg'):
             base_model = VGG16(include_top=False, weights='imagenet',input_shape= (224,224,3))
