@@ -48,11 +48,11 @@ elif(typ=='resnet'):
     target_size = (224, 224)
 
 if modelT=='masterCategory':
-    model.load_weights("Fashion_pretrain_resnet50_MasterCategory_"+typ+".h5")
+    model.load_weights("Fashion_pretrain_MasterCategory_"+typ+".h5")
 elif modelT=='subCategory':
     model.load_weights("Fashion_pretrain_SubCategory_"+typ+".h5")
 elif modelT=='articleType':
-    model.load_weights("Fashion_pretrain_ArticleType+"+typ+".h5")
+    model.load_weights("Fashion_pretrain_ArticleType_+"+typ+".h5")
 #load the weights
 
 
