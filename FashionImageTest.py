@@ -52,7 +52,7 @@ if modelT=='masterCategory':
 elif modelT=='subCategory':
     model.load_weights("Fashion_pretrain_SubCategory_"+typ+".h5")
 elif modelT=='articleType':
-    model.load_weights("Fashion_pretrain_ArticleType_+"+typ+".h5")
+    model.load_weights("Fashion_pretrain_ArticleType_"+typ+".h5")
 #load the weights
 
 
