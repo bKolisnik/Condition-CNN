@@ -10,7 +10,7 @@
 
 import numpy as np  # linear algebra
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
-
+import matplotlib.pyplot as plt
 # Input data files are available in the "../input/" directory.
 # For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
 
@@ -168,7 +168,7 @@ print(val_generator.class_indices)
 try:
     STEP_SIZE_TRAIN = train_generator.n // train_generator.batch_size
     STEP_SIZE_VALID = val_generator.n // val_generator.batch_size
-    model.fit_generator(train_generator,
+    history = model.fit_generator(train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
                         epochs=epochs,
                         validation_data=val_generator,
@@ -183,6 +183,17 @@ elif modelT=='subCategory':
     model.save_weights("Fashion_pretrain_SubCategory_"+typ+".h5")
 elif modelT=='articleType':
     model.save_weights("Fashion_pretrain_ArticleType_"+typ+".h5")
+
+
+# summarize history for loss
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'val'], loc='upper left')
+plt.show()
+plt.savefig(modelT+'_loss.png', bbox_inches='tight')
 
 try:
     print("Test generator n", test_generator.n)
