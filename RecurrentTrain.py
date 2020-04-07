@@ -7,10 +7,10 @@
 # This Python 3 environment comes with many helpful analytics libraries installed
 # It is defined by the kaggle/python docker image: https://github.com/kaggle/docker-python
 # For example, here's several helpful packages to   in
-
+import json
 import numpy as np  # linear algebra
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
-
+import matplotlib.pyplot as plt
 # Input data files are available in the "../input/" directory.
 # For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
 
@@ -232,7 +232,7 @@ val_generator = get_flow_from_dataframe(val,dataframe=val_df,image_shape=target_
 try:
     STEP_SIZE_TRAIN = train.n // train.batch_size
     STEP_SIZE_VALID = val.n // val.batch_size
-    model.fit_generator(train_generator,
+    history = model.fit_generator(train_generator,
                         epochs=epochs,
                         validation_data=val_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
@@ -242,6 +242,25 @@ except ValueError as v:
     print(v)
 # Saving the weights in the current directory
 model.save_weights("Fashion_pretrain_recurrent_"+typ+".h5")
+
+json = json.dumps(history.history)
+f = open("dict.json","w")
+f.write(json)
+f.close()
+
+# summarize history for loss
+plt.plot(history.history['master_output_loss'])
+plt.plot(history.history['val_master_output_loss'])
+plt.plot(history.history['sub_output_loss'])
+plt.plot(history.history['val_sub_output_loss'])
+plt.plot(history.history['article_output_loss'])
+plt.plot(history.history['val_article_output_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train master', 'val master', 'train sub', 'val sub', 'train article', 'val article'], loc='upper left')
+plt.show()
+plt.savefig(modelT+'_loss.png', bbox_inches='tight')
 
 '''
 try:
