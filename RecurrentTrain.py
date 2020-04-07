@@ -243,10 +243,10 @@ except ValueError as v:
 # Saving the weights in the current directory
 model.save_weights("Fashion_pretrain_recurrent_"+typ+".h5")
 
-json = json.dumps(history.history)
-f = open("dict.json","w")
-f.write(json)
-f.close()
+#json = json.dumps(history.history)
+#f = open("dict.json","w")
+#f.write(json)
+#f.close()
 
 # summarize history for loss
 plt.plot(history.history['master_output_loss'])
