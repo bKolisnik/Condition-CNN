@@ -260,7 +260,7 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train master', 'val master', 'train sub', 'val sub', 'train article', 'val article'], loc='upper left')
 plt.show()
-plt.savefig(modelT+'_loss.png', bbox_inches='tight')
+plt.savefig('branching'+'_loss.png', bbox_inches='tight')
 
 '''
 try:
