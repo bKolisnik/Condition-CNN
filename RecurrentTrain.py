@@ -75,9 +75,9 @@ elif(typ=='resnet'):
     target_size = (224, 224)
 
 
-train_df = pd.read_csv("fashion_product_train_full.csv")
-val_df = pd.read_csv("fashion_product_validation_full.csv")
-test_df = pd.read_csv("fashion_product_test_full.csv")
+train_df = pd.read_csv("fashion_product_train.csv")
+val_df = pd.read_csv("fashion_product_validation.csv")
+test_df = pd.read_csv("fashion_product_test.csv")
 
 
 lblmapsub = {'Bags': 0, 'Belts': 1, 'Bottomwear': 2, 'Dress': 3, 'Eyewear': 4, 'Flip Flops': 5, 'Fragrance': 6, 'Headwear': 7, 'Innerwear': 8, 'Jewellery': 9, 'Lips': 10, 'Loungewear and Nightwear': 11, 'Nails': 12, 'Sandal': 13, 'Saree': 14, 'Shoes': 15, 'Socks': 16, 'Ties': 17, 'Topwear': 18, 'Wallets': 19, 'Watches': 20}
