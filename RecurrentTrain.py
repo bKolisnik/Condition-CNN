@@ -244,9 +244,11 @@ except ValueError as v:
 model.save_weights("Fashion_pretrain_recurrent_"+typ+".h5")
 
 #json = json.dumps(history.history)
+#json.dump(history_dict, open(, 'w'))
 #f = open("dict.json","w")
 #f.write(json)
 #f.close()
+
 
 # summarize history for loss
 plt.plot(history.history['master_output_loss'])
@@ -261,6 +263,9 @@ plt.xlabel('epoch')
 plt.legend(['train master', 'val master', 'train sub', 'val sub', 'train article', 'val article'], loc='upper left')
 plt.show()
 plt.savefig('branching'+'_loss.png', bbox_inches='tight')
+
+pd.DataFrame.from_dict(history.history).to_csv('historyRecurrent_'+typ+'".csv',index=False)
+
 
 '''
 try:
