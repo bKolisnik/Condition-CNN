@@ -241,7 +241,7 @@ try:
 except ValueError as v:
     print(v)
 # Saving the weights in the current directory
-model.save_weights("Fashion_pretrain_recurrent_"+epochs+"_"+typ+".h5")
+model.save_weights("Fashion_pretrain_recurrent_"+str(epochs)+"_"+typ+".h5")
 
 #json = json.dumps(history.history)
 #json.dump(history_dict, open(, 'w'))
@@ -264,7 +264,7 @@ plt.legend(['train master', 'val master', 'train sub', 'val sub', 'train article
 plt.show()
 plt.savefig('branching'+"_"+epochs+"_"+typ+'_loss.png', bbox_inches='tight')
 
-pd.DataFrame.from_dict(history.history).to_csv('historyRecurrent_'+epochs+'_'+typ+'.csv',index=False)
+pd.DataFrame.from_dict(history.history).to_csv('historyRecurrent_'+str(epochs)+'_'+typ+'.csv',index=False)
 
 
 '''
