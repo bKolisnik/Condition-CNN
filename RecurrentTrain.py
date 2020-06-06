@@ -262,7 +262,7 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train master', 'val master', 'train sub', 'val sub', 'train article', 'val article'], loc='upper left')
 plt.show()
-plt.savefig('branching'+"_"+epochs+"_"+typ+'_loss.png', bbox_inches='tight')
+plt.savefig('branching'+"_"+str(epochs)+"_"+typ+'_loss.png', bbox_inches='tight')
 
 pd.DataFrame.from_dict(history.history).to_csv('historyRecurrent_'+str(epochs)+'_'+typ+'.csv',index=False)
 
