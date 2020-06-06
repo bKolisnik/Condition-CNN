@@ -178,11 +178,11 @@ except ValueError as v:
     print(v)
 # Saving the weights in the current directory
 if modelT=='masterCategory':
-    model.save_weights("Fashion_pretrain_MasterCategory_"+typ+".h5")
+    model.save_weights("Fashion_pretrain_MasterCategory_"+str(epochs)+"_"+typ+".h5")
 elif modelT=='subCategory':
-    model.save_weights("Fashion_pretrain_SubCategory_"+typ+".h5")
+    model.save_weights("Fashion_pretrain_SubCategory_"+str(epochs)+"_"+typ+".h5")
 elif modelT=='articleType':
-    model.save_weights("Fashion_pretrain_ArticleType_"+typ+".h5")
+    model.save_weights("Fashion_pretrain_ArticleType_"+str(epochs)+"_"+typ+".h5")
 
 
 # summarize history for loss
@@ -193,7 +193,8 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'val'], loc='upper left')
 plt.show()
-plt.savefig(modelT+'_loss.png', bbox_inches='tight')
+plt.savefig(modelT+"_"+str(epochs)+"_"+typ+'_loss.png', bbox_inches='tight')
+pd.DataFrame.from_dict(history.history).to_csv(modelT+"_"+str(epochs)+'_'+typ+'.csv',index=False)
 
 try:
     print("Test generator n", test_generator.n)
