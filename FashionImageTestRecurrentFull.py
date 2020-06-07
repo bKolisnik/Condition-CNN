@@ -49,7 +49,7 @@ onehot_master = to_categorical(test_df['articleType'].values)
 test_df['articleTypeOneHot'] = onehot_master.tolist()
 
 direc = '../data/fashion-dataset/images/'
-arg_names = ['filename','typ','batch']
+arg_names = ['filename','typ','batch','path']
 args = dict(zip(arg_names, sys.argv))
 
 
@@ -62,8 +62,15 @@ if(args.get('typ') is not None):
     typ=args['typ']
 else:
     typ = 'vgg'
+
+if(args.get('path') is not None):
+    path = args['path']
+else:
+    path = "Fashion_pretrain_recurrent_"+typ+".h5"
+
 print("Batch size " + str(batch))
 print("Type is "+typ)
+print("Path to weights is: " + path)
 
 from RecurrentModelFull import RecurrentTest
 from RecurrentModelFull import RecurrentTrain
@@ -97,7 +104,7 @@ elif(typ=='resnet'):
 
 
 
-model2.load_weights("Fashion_pretrain_recurrent_"+typ+".h5")
+model2.load_weights(path)
 #load the weights into model 2 then change the ordering of the weights
 
 '''

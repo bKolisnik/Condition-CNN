@@ -5,7 +5,7 @@ import numpy as np  # linear algebra
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 
 direc = '../data/fashion-dataset/images/'
-arg_names = ['filename','model','typ','batch']
+arg_names = ['filename','model','typ','batch','path']
 args = dict(zip(arg_names, sys.argv))
 
 if(args.get('model') is not None):
@@ -23,9 +23,21 @@ if(args.get('batch') is not None):
 else:
     batch = 64
 
+if(args.get('path') is not None):
+    path = args['path']
+else:
+    if modelT == 'masterCategory':
+        path = "Fashion_pretrain_MasterCategory_" + typ + ".h5"
+    elif modelT == 'subCategory':
+        path = "Fashion_pretrain_SubCategory_" + typ + ".h5"
+    else:
+        #modelT == 'articleType'
+        path = "Fashion_pretrain_ArticleType_" + typ + ".h5"
+
 print("Testing model " + modelT)
 print("Batch size " + str(batch))
 print("Type is "+typ)
+print("Path to weights is: " + path)
 
 if(modelT=='masterCategory'):
     from MasterCategoryModel import Master
@@ -47,12 +59,7 @@ elif(typ=='resnet'):
     #resnet
     target_size = (224, 224)
 
-if modelT=='masterCategory':
-    model.load_weights("Fashion_pretrain_MasterCategory_"+typ+".h5")
-elif modelT=='subCategory':
-    model.load_weights("Fashion_pretrain_SubCategory_"+typ+".h5")
-elif modelT=='articleType':
-    model.load_weights("Fashion_pretrain_ArticleType_"+typ+".h5")
+model.load_weights(path)
 #load the weights
 
 
