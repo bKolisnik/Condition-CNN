@@ -161,8 +161,8 @@ def train_recurrent(label, model):
 
 def train_baseline(label, model):
     model.load_weights(weights_path, by_name=True)
-    '''label is masterCategoryOneHot, subCategoryOneHot, or, articleTypeOneHot'''
-    y = label+"OneHot"
+    '''label is masterCategory, subCategory, or, articleType'''
+    y = label
     train_generator = train_datagen.flow_from_dataframe(
         dataframe=train_df,
         directory=direc,
