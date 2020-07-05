@@ -93,11 +93,11 @@ train_datagen = ImageDataGenerator(rescale=1. / 255,
                                    shear_range=0.1,
                                    zoom_range=0.1,
                                    horizontal_flip=True,
-                                   featurewise_center=True,
-                                   featurewise_std_normalization=True)
+                                   samplewise_center=True,
+                                   samplewise_std_normalization=True)
 val_datagen = ImageDataGenerator(rescale=1. / 255,
-                                   featurewise_center=True,
-                                   featurewise_std_normalization=True)
+                                   samplewise_center=True,
+                                   samplewise_std_normalization=True)
 
 def get_flow_from_dataframe(g, dataframe,image_shape=target_size,batch_size=batch):
     while True:
