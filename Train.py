@@ -104,6 +104,7 @@ def get_flow_from_dataframe(g, dataframe,image_shape=target_size,batch_size=batc
 
 
 def train_recurrent(label, model):
+    model.load_weights(weights_path, by_name=True)
     train = train_datagen.flow_from_dataframe(
         dataframe=train_df,
         directory=direc,
@@ -156,6 +157,7 @@ def train_recurrent(label, model):
 #def BCNN_train():
 
 def train_baseline(label, model):
+    model.load_weights(weights_path, by_name=True)
     '''label is masterCategoryOneHot, subCategoryOneHot, or, articleTypeOneHot'''
     y = label+"OneHot"
     train_generator = train_datagen.flow_from_dataframe(
