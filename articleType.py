@@ -6,6 +6,8 @@ from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, MaxPooling2D,
 from tensorflow.keras.layers import BatchNormalization, Dropout
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import SGD
+import numpy as np
+import tensorflow.keras.backend as K
 import sys
 
 class ArticleType:
@@ -69,7 +71,8 @@ class ArticleType:
             outputs=pred,
             name="Baseline articleType CNN")
 
-        trainable_params = tf.keras.backend.count_params(model.trainable_weights)
+        trainable_params= np.sum([K.count_params(w) for w in model.trainable_weights])
+        #trainable_params = tf.keras.backend.count_params(model.trainable_weights)
         print("Trainable paramaters: "+str(trainable_params))
 
         #Keras will automaticall use categorical accuracy when accuracy is used.
