@@ -132,14 +132,13 @@ def train_recurrent(label, model):
                             steps_per_epoch=STEP_SIZE_TRAIN,
                             validation_steps=STEP_SIZE_VALID)
         print("Finished training")
+        #Save training as csv
+        pd.DataFrame.from_dict(history.history).to_csv("../history/"+label+"_"+str(epochs)+"_epochs_"+TODAY+'.csv',index=False)
     except ValueError as v:
         print(v)
 
     # Saving the weights in the current directory
-    model.save_weights("../weights/"+label+"_"+str(epochs)+"_epochs_"+TODAY+".h5")
-
-    #Save training as csv
-    pd.DataFrame.from_dict(history.history).to_csv("../history/"+label+"_"+str(epochs)+"_epochs_"+TODAY+'.csv',index=False)     
+    model.save_weights("../weights/"+label+"_"+str(epochs)+"_epochs_"+TODAY+".h5")     
 
     # summarize history for loss
     plt.plot(history.history['master_output_loss'])
@@ -184,14 +183,13 @@ def train_baseline(label, model):
                             validation_data=val_generator,
                             validation_steps=STEP_SIZE_VALID)
         print("Finished training")
+        #Save training as csv
+        pd.DataFrame.from_dict(history.history).to_csv("../history/"+label+"_"+str(epochs)+"_epochs_"+TODAY+'.csv',index=False)
     except ValueError as v:
         print(v)
 
     # Saving the weights in the current directory
     model.save_weights("../weights/"+label+"_"+str(epochs)+"_epochs_"+TODAY+".h5")
-
-    #Save training as csv
-    pd.DataFrame.from_dict(history.history).to_csv("../history/"+label+"_"+str(epochs)+"_epochs_"+TODAY+'.csv',index=False)
     
     # plot loss
     plt.plot(history.history['loss'])
