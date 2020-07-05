@@ -69,7 +69,7 @@ class ArticleType:
         model = Model(
             inputs=input_image,
             outputs=pred,
-            name="Baseline articleType CNN")
+            name="Baseline_articleType_CNN")
 
         trainable_params= np.sum([K.count_params(w) for w in model.trainable_weights])
         #trainable_params = tf.keras.backend.count_params(model.trainable_weights)

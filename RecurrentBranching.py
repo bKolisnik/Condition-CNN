@@ -245,7 +245,7 @@ class RecurrentTest:
         model = Model(
             inputs=[input_image],
             outputs=[c_1_pred, c_2_pred, fine_pred],
-            name="Branching CNN")
+            name="Branching_CNN")
 
         losses = {
             "master_output": "categorical_crossentropy",

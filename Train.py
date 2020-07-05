@@ -134,25 +134,25 @@ def train_recurrent(label, model):
         print("Finished training")
         #Save training as csv
         pd.DataFrame.from_dict(history.history).to_csv("../history/"+label+"_"+str(epochs)+"_epochs_"+TODAY+'.csv',index=False)
+
+        # summarize history for loss
+        plt.plot(history.history['master_output_loss'])
+        plt.plot(history.history['val_master_output_loss'])
+        plt.plot(history.history['sub_output_loss'])
+        plt.plot(history.history['val_sub_output_loss'])
+        plt.plot(history.history['article_output_loss'])
+        plt.plot(history.history['val_article_output_loss'])
+        plt.title('model loss')
+        plt.ylabel('loss')
+        plt.xlabel('epoch')
+        plt.legend(['train master', 'val master', 'train sub', 'val sub', 'train article', 'val article'], loc='upper left')
+        plt.show()
+        plt.savefig("../plots/"+label+"_"+str(epochs)+"_epochs_"+TODAY+"_loss.png", bbox_inches='tight')
     except ValueError as v:
         print(v)
 
     # Saving the weights in the current directory
     model.save_weights("../weights/"+label+"_"+str(epochs)+"_epochs_"+TODAY+".h5")     
-
-    # summarize history for loss
-    plt.plot(history.history['master_output_loss'])
-    plt.plot(history.history['val_master_output_loss'])
-    plt.plot(history.history['sub_output_loss'])
-    plt.plot(history.history['val_sub_output_loss'])
-    plt.plot(history.history['article_output_loss'])
-    plt.plot(history.history['val_article_output_loss'])
-    plt.title('model loss')
-    plt.ylabel('loss')
-    plt.xlabel('epoch')
-    plt.legend(['train master', 'val master', 'train sub', 'val sub', 'train article', 'val article'], loc='upper left')
-    plt.show()
-    plt.savefig("../plots/"+label+"_"+str(epochs)+"_epochs_"+TODAY+"_loss.png", bbox_inches='tight')
 #def BCNN_train():
 
 def train_baseline(label, model):
@@ -185,21 +185,22 @@ def train_baseline(label, model):
         print("Finished training")
         #Save training as csv
         pd.DataFrame.from_dict(history.history).to_csv("../history/"+label+"_"+str(epochs)+"_epochs_"+TODAY+'.csv',index=False)
+    
+        # plot loss
+        plt.plot(history.history['loss'])
+        plt.plot(history.history['val_loss'])
+        plt.title('model loss')
+        plt.ylabel('loss')
+        plt.xlabel('epoch')
+        plt.legend(['train', 'val'], loc='upper left')
+        plt.show()
+        plt.savefig("../plots/"+label+"_"+str(epochs)+"_epochs_"+TODAY+'_loss.png', bbox_inches='tight')
+
     except ValueError as v:
         print(v)
 
     # Saving the weights in the current directory
     model.save_weights("../weights/"+label+"_"+str(epochs)+"_epochs_"+TODAY+".h5")
-    
-    # plot loss
-    plt.plot(history.history['loss'])
-    plt.plot(history.history['val_loss'])
-    plt.title('model loss')
-    plt.ylabel('loss')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'val'], loc='upper left')
-    plt.show()
-    plt.savefig("../plots/"+label+"_"+str(epochs)+"_epochs_"+TODAY+'_loss.png', bbox_inches='tight')
 
 
 if(model_type == 'Recurrent'):

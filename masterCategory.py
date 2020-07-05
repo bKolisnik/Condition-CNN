@@ -6,6 +6,7 @@ from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, MaxPooling2D,
 from tensorflow.keras.layers import BatchNormalization, Dropout
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import SGD
+import tensorflow.keras.backend as K
 import sys
 
 
@@ -68,7 +69,7 @@ class MasterCategory:
         model = Model(
             inputs=input_image,
             outputs=pred,
-            name="Baseline masterCategory CNN")
+            name="Baseline_masterCategory_CNN")
 
         trainable_params = tf.keras.backend.count_params(model.trainable_weights)
         print("Trainable paramaters: "+str(trainable_params))
