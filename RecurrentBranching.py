@@ -6,6 +6,8 @@ from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, MaxPooling2D,
 from tensorflow.heras.layers import BatchNormalization, Dropout
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import SGD
+import numpy as np
+import tensorflow.keras.backend as K
 import sys
 
 #This new arrangement is designed to look as similar as possible to the B-CNN model
@@ -255,7 +257,8 @@ class RecurrentTest:
         model.compile(optimizer=SGD(lr=0.001, momentum=0.9), loss=losses,
                       metrics=['categorical_accuracy'])
 
-        trainable_params = tf.keras.backend.count_params(model.trainable_weights)
+        trainable_params= np.sum([K.count_params(w) for w in model.trainable_weights])
+        #trainable_params = tf.keras.backend.count_params(model.trainable_weights)
         print("Trainable paramaters: "+str(trainable_params))
 
         self.model = model
