@@ -103,11 +103,6 @@ def get_flow_from_dataframe(g, dataframe,image_shape=target_size,batch_size=batc
     while True:
         x_1 = g.next()
 
-
-        print(x_1[0].shape)
-        print(x_1[1][0].shape)
-        print(x_1[1][1].shape)
-        print(x_1[1][2].shape)
         yield [x_1[0], x_1[1][0], x_1[1][1]], x_1[1]
 
 

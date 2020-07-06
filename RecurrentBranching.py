@@ -116,7 +116,7 @@ class RecurrentTrain:
         y = BatchNormalization()(y)
         y = Dropout(0.5)(y)
         preds_features = concatenate([y,input_sub,input_master])
-        fine_pred = Dense(self.art_classes, activation='softmax', name='article_output')(x)
+        fine_pred = Dense(self.art_classes, activation='softmax', name='article_output')(preds_features)
 
         # Model to be trained
         #modelC = Model(inputs=[input_image,input_master,input_sub], outputs=z)
