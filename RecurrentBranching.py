@@ -131,7 +131,11 @@ class RecurrentTrain:
         model = Model(
             inputs=[input_image,input_master,input_sub],
             outputs=[c_1_pred, c_2_pred, fine_pred],
-            name="Branching CNN")
+            name="Branching_CNN")
+
+        trainable_params= np.sum([K.count_params(w) for w in model.trainable_weights])
+        #trainable_params = tf.keras.backend.count_params(model.trainable_weights)
+        print("Trainable paramaters: "+str(trainable_params))
 
         losses = {
             "master_output": "categorical_crossentropy",
@@ -256,10 +260,6 @@ class RecurrentTest:
         }
         model.compile(optimizer=SGD(lr=0.001, momentum=0.9), loss=losses,
                       metrics=['categorical_accuracy'])
-
-        trainable_params= np.sum([K.count_params(w) for w in model.trainable_weights])
-        #trainable_params = tf.keras.backend.count_params(model.trainable_weights)
-        print("Trainable paramaters: "+str(trainable_params))
 
         self.model = model
 
