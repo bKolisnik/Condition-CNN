@@ -56,6 +56,8 @@ class ArticleType:
         x = Conv2D(512, (3, 3), activation='relu', padding='same', name='block5_conv3_art')(x)
         x = BatchNormalization()(x)
 
+        #Experiment with number of neurons in final layers for the baseline models.
+
         #--- subCategory prediction---
         x = Flatten(name='flatten')(x)
         x = Dense(256, activation='relu', name='fc_art')(x)
@@ -74,7 +76,7 @@ class ArticleType:
         trainable_params= np.sum([K.count_params(w) for w in model.trainable_weights])
         #trainable_params = tf.keras.backend.count_params(model.trainable_weights)
         print("Trainable paramaters: "+str(trainable_params))
-
+        sys.stdout.flush()
         #Keras will automaticall use categorical accuracy when accuracy is used.
         model.compile(optimizer=SGD(lr=0.001, momentum=0.9), loss='categorical_crossentropy', metrics=['categorical_accuracy'])
 
