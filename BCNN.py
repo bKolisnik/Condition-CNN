@@ -127,7 +127,7 @@ class BCNN:
         x = Dense(4096, activation='relu', name='f_fc_2')(x)
         x = BatchNormalization()(x)
         x = Dropout(0.5)(x)
-        fine_pred = Dense(self.art_classes, activation='softmax', name='predictions')(x)
+        fine_pred = Dense(self.art_classes, activation='softmax', name='f_predictions')(x)
 
         model = Model(img_input, [c_1_pred, c_2_pred, fine_pred], name='BCNN')
         
