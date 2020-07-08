@@ -129,7 +129,9 @@ class BCNN:
         fine_pred = Dense(self.art_classes, activation='softmax', name='predictions')(x)
 
         model = Model(img_input, [c_1_pred, c_2_pred, fine_pred], name='BCNN')
-        trainable_params = tf.keras.backend.count_params(model.trainable_weights)
+        
+        trainable_params= np.sum([K.count_params(w) for w in model.trainable_weights])
+        #trainable_params = tf.keras.backend.count_params(model.trainable_weights)
         print("Trainable paramaters: "+str(trainable_params))
 
         sgd = SGD(lr=0.001, momentum=0.9)
