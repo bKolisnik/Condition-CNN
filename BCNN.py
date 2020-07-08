@@ -8,6 +8,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.callbacks import LearningRateScheduler
 from tensorflow.keras.callbacks import Callback
+import numpy as np
 import tensorflow.keras.backend as K
 import sys
 
