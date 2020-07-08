@@ -105,7 +105,7 @@ def get_flow_from_dataframe(g, dataframe,image_shape=target_size,batch_size=batc
 
         yield [x_1[0], x_1[1][0], x_1[1][1]], x_1[1]
 
-def train_BCNN(label, model):
+def train_BCNN(label, model, cbks):
     model.load_weights(weights_path, by_name=True)
     train_generator = train_datagen.flow_from_dataframe(
         dataframe=train_df,
@@ -131,7 +131,7 @@ def train_BCNN(label, model):
                             validation_data=val_generator,
                             steps_per_epoch=STEP_SIZE_TRAIN,
                             validation_steps=STEP_SIZE_VALID,
-                            callbacks=model.cbks)
+                            callbacks=cbks)
         print("Finished training")
         #Save training as csv
         pd.DataFrame.from_dict(history.history).to_csv("../history/"+label+"_"+str(epochs)+"_epochs_"+TODAY+'.csv',index=False)
@@ -261,8 +261,10 @@ if(model_type == 'Recurrent'):
     train_recurrent(model_type, model)
 elif(model_type=='BCNN'):
     from BCNN import BCNN
-    model = BCNN().model
-    train_BCNN(model_type, model)
+    bcnn = BCNN()
+    model = bcnn.model
+    cbks = bcnn.cbks
+    train_BCNN(model_type, model, cbks)
 elif(model_type == 'articleType'):
     from articleType import ArticleType
     model = ArticleType().model
