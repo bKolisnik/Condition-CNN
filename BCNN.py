@@ -43,7 +43,7 @@ class LossWeightsModifier(tf.keras.callbacks.Callback):
             K.set_value(self.gamma, 1)
 
 
-class CNNTrain:
+class BCNN:
     '''Based on zhuxinqimac implementation on github, article cited in paper
     https://github.com/zhuxinqimac/B-CNN/blob/master/CIFAR_100_keras_vgg16_hierarchy_dynamic.py'''
 

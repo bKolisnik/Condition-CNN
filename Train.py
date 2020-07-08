@@ -259,6 +259,10 @@ if(model_type == 'Recurrent'):
     from RecurrentBranching import RecurrentTrain
     model = RecurrentTrain().model
     train_recurrent(model_type, model)
+elif(model_type=='BCNN'):
+    from BCNN import BCNN
+    model = BCNN().model
+    train_BCNN(model_type, model)
 elif(model_type == 'articleType'):
     from articleType import ArticleType
     model = ArticleType().model
@@ -268,9 +272,9 @@ elif(model_type == 'subCategory'):
     model = SubCategory().model
     train_baseline(model_type,model)
 else:
+    #masterCategory
     from masterCategory import MasterCategory
     model = MasterCategory().model
     train_baseline(model_type, model)
-    #masterCategory
+    
 
-#elif(model_type == 'BCNN'):
