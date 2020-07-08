@@ -261,7 +261,7 @@ if(model_type == 'Recurrent'):
     train_recurrent(model_type, model)
 elif(model_type=='BCNN'):
     from BCNN import BCNN
-    bcnn = BCNN()
+    bcnn = BCNN(model_type)
     model = bcnn.model
     cbks = bcnn.cbks
     train_BCNN(model_type, model, cbks)
