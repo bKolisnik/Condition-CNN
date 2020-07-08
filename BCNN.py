@@ -11,6 +11,7 @@ from tensorflow.keras.callbacks import Callback
 import numpy as np
 import tensorflow.keras.backend as K
 import sys
+from tensorflow.keras.callbacks import ModelCheckpoint
 
 
 
@@ -48,7 +49,8 @@ class BCNN:
     '''Based on zhuxinqimac implementation on github, article cited in paper
     https://github.com/zhuxinqimac/B-CNN/blob/master/CIFAR_100_keras_vgg16_hierarchy_dynamic.py'''
 
-    def __init__(self):
+    def __init__(self, label):
+        '''label is the name to be substituted for file saving'''
         self.master_classes=4
         self.sub_classes=21
         self.art_classes=45
@@ -143,7 +145,9 @@ class BCNN:
                                 metrics=['accuracy'])
         change_lr = LearningRateScheduler(scheduler)
         change_lw = LossWeightsModifier(alpha, beta, gamma)
-        self.cbks = [change_lr, change_lw]
+        checkpoint = ModelCheckpoint("../weights/"+label+"_{epoch:02d}_epochs_{val_loss:.2f}_val_loss.hdf5", monitor='val_loss', verbose=1,
+            save_best_only=False, save_weights_only=True,mode='auto', period=5)
+        self.cbks = [change_lr, change_lw,checkpoint]
         self.model = model
 
 
