@@ -105,6 +105,52 @@ def get_flow_from_dataframe(g, dataframe,image_shape=target_size,batch_size=batc
 
         yield [x_1[0], x_1[1][0], x_1[1][1]], x_1[1]
 
+def train_BCNN(label, model):
+    model.load_weights(weights_path, by_name=True)
+    train_generator = train_datagen.flow_from_dataframe(
+        dataframe=train_df,
+        directory=direc,
+        x_col="filepath",
+        y_col=['masterCategoryOneHot','subCategoryOneHot','articleTypeOneHot'],
+        target_size=target_size,
+        batch_size=batch,
+        class_mode='multi_output')
+    val_generator = val_datagen.flow_from_dataframe(
+        dataframe=val_df,
+        directory=direc,
+        x_col="filepath",
+        y_col=['masterCategoryOneHot','subCategoryOneHot','articleTypeOneHot'],
+        target_size=target_size,
+        batch_size=batch,
+        class_mode='multi_output')
+    try:
+        STEP_SIZE_TRAIN = train_generator.n // train_generator.batch_size
+        STEP_SIZE_VALID = val_generator.n // val_generator.batch_size
+        history = model.fit_generator(train_generator,
+                            epochs=epochs,
+                            validation_data=val_generator,
+                            steps_per_epoch=STEP_SIZE_TRAIN,
+                            validation_steps=STEP_SIZE_VALID,
+                            callbacks=model.cbks)
+        print("Finished training")
+        #Save training as csv
+        pd.DataFrame.from_dict(history.history).to_csv("../history/"+label+"_"+str(epochs)+"_epochs_"+TODAY+'.csv',index=False)
+    
+        # plot loss
+        plt.plot(history.history['loss'])
+        plt.plot(history.history['val_loss'])
+        plt.title('model loss')
+        plt.ylabel('loss')
+        plt.xlabel('epoch')
+        plt.legend(['train', 'val'], loc='upper left')
+        plt.show()
+        plt.savefig("../plots/"+label+"_"+str(epochs)+"_epochs_"+TODAY+'_loss.png', bbox_inches='tight')
+
+    except ValueError as v:
+        print(v)
+
+    # Saving the weights in the current directory
+    model.save_weights("../weights/"+label+"_"+str(epochs)+"_epochs_"+TODAY+".h5")
 
 
 def train_recurrent(label, model):

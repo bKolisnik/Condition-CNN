@@ -6,38 +6,41 @@ from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, MaxPooling2D,
 from tensorflow.heras.layers import BatchNormalization, Dropout
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import SGD
-from keras.callbacks import LearningRateScheduler
+from tensorflow.keras.callbacks import LearningRateScheduler
+from tensorflow.keras.callbacks import Callback
 import tensorflow.keras.backend as K
 import sys
 
 
+
+
 def scheduler(epoch):
-  learning_rate_init = 0.001
-  if epoch > 55:
-    learning_rate_init = 0.0002
-  if epoch > 70:
-    learning_rate_init = 0.00005
-  return learning_rate_init
+    learning_rate_init = 0.001
+    if epoch > 55:
+        learning_rate_init = 0.0002
+    if epoch > 70:
+        learning_rate_init = 0.00005
+    return learning_rate_init
 
 class LossWeightsModifier(tf.keras.callbacks.Callback):
-  def __init__(self, alpha, beta, gamma):
-    self.alpha = alpha
-    self.beta = beta
-    self.gamma = gamma
-    # customize your behavior
-  def on_epoch_end(self, epoch, logs={}):
-    if epoch == 13:
-      K.keras.set_value(self.alpha, 0.1)
-      K.set_value(self.beta, 0.8)
-      K.set_value(self.gamma, 0.1)
-    if epoch == 23:
-      K.set_value(self.alpha, 0.1)
-      K.set_value(self.beta, 0.2)
-      K.set_value(self.gamma, 0.7)
-    if epoch == 33:
-      K.set_value(self.alpha, 0)
-      K.set_value(self.beta, 0)
-      K.set_value(self.gamma, 1)
+    def __init__(self, alpha, beta, gamma):
+        self.alpha = alpha
+        self.beta = beta
+        self.gamma = gamma
+        # customize your behavior
+    def on_epoch_end(self, epoch, logs={}):
+        if epoch == 13:
+            K.keras.set_value(self.alpha, 0.1)
+            K.set_value(self.beta, 0.8)
+            K.set_value(self.gamma, 0.1)
+        if epoch == 23:
+            K.set_value(self.alpha, 0.1)
+            K.set_value(self.beta, 0.2)
+            K.set_value(self.gamma, 0.7)
+        if epoch == 33:
+            K.set_value(self.alpha, 0)
+            K.set_value(self.beta, 0)
+            K.set_value(self.gamma, 1)
 
 
 class CNNTrain:
@@ -70,13 +73,13 @@ class CNNTrain:
 
         #--- coarse 1 branch ---
         c_1_bch = Flatten(name='c1_flatten')(x)
-        c_1_bch = Dense(256, activation='relu', name='c1_fc_cifar10_1')(c_1_bch)
+        c_1_bch = Dense(256, activation='relu', name='c1_fc')(c_1_bch)
         c_1_bch = BatchNormalization()(c_1_bch)
         c_1_bch = Dropout(0.5)(c_1_bch)
         c_1_bch = Dense(256, activation='relu', name='c1_fc2')(c_1_bch)
         c_1_bch = BatchNormalization()(c_1_bch)
         c_1_bch = Dropout(0.5)(c_1_bch)
-        c_1_pred = Dense(self.master_classes, activation='softmax', name='c1_predictions_cifar10')(c_1_bch)
+        c_1_pred = Dense(self.master_classes, activation='softmax', name='c1_predictions')(c_1_bch)
 
         #--- block 3 ---
         x = Conv2D(256, (3, 3), activation='relu', padding='same', name='block3_conv1')(x)
@@ -89,13 +92,13 @@ class CNNTrain:
 
         #--- coarse 2 branch ---
         c_2_bch = Flatten(name='c2_flatten')(x)
-        c_2_bch = Dense(1024, activation='relu', name='c2_fc_cifar100_1')(c_2_bch)
+        c_2_bch = Dense(1024, activation='relu', name='c2_fc')(c_2_bch)
         c_2_bch = BatchNormalization()(c_2_bch)
         c_2_bch = Dropout(0.5)(c_2_bch)
         c_2_bch = Dense(1024, activation='relu', name='c2_fc2')(c_2_bch)
         c_2_bch = BatchNormalization()(c_2_bch)
         c_2_bch = Dropout(0.5)(c_2_bch)
-        c_2_pred = Dense(self.sub_classes, activation='softmax', name='c2_predictions_cifar100')(c_2_bch)
+        c_2_pred = Dense(self.sub_classes, activation='softmax', name='c2_predictions')(c_2_bch)
 
         #--- block 4 ---
         x = Conv2D(512, (3, 3), activation='relu', padding='same', name='block4_conv1')(x)
@@ -117,18 +120,27 @@ class CNNTrain:
 
         #--- fine block ---
         x = Flatten(name='flatten')(x)
-        x = Dense(4096, activation='relu', name='fc_cifar100_1')(x)
+        x = Dense(4096, activation='relu', name='f_fc')(x)
         x = BatchNormalization()(x)
         x = Dropout(0.5)(x)
-        x = Dense(4096, activation='relu', name='fc_cifar100_2')(x)
+        x = Dense(4096, activation='relu', name='f_fc_2')(x)
         x = BatchNormalization()(x)
         x = Dropout(0.5)(x)
-        fine_pred = Dense(self.art_classes, activation='softmax', name='predictions_cifar100')(x)
+        fine_pred = Dense(self.art_classes, activation='softmax', name='predictions')(x)
 
         model = Model(img_input, [c_1_pred, c_2_pred, fine_pred], name='BCNN')
         trainable_params = tf.keras.backend.count_params(model.trainable_weights)
         print("Trainable paramaters: "+str(trainable_params))
 
+        sgd = SGD(lr=0.001, momentum=0.9)
+        model.compile(loss='categorical_crossentropy', 
+                                optimizer=sgd, 
+                                loss_weights=[alpha, beta, gamma], 
+                                # optimizer=keras.optimizers.Adadelta(),
+                                metrics=['accuracy'])
+        change_lr = LearningRateScheduler(scheduler)
+        change_lw = LossWeightsModifier(alpha, beta, gamma)
+        self.cbks = [change_lr, change_lw]
         self.model = model
 
 
