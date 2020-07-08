@@ -258,6 +258,11 @@ class RecurrentTest:
             "sub_output": "categorical_crossentropy",
             "article_output": "categorical_crossentropy"
         }
+
+        trainable_params= np.sum([K.count_params(w) for w in model.trainable_weights])
+        #trainable_params = tf.keras.backend.count_params(model.trainable_weights)
+        print("Trainable paramaters: "+str(trainable_params))
+
         model.compile(optimizer=SGD(lr=0.001, momentum=0.9), loss=losses,
                       metrics=['categorical_accuracy'])
 
