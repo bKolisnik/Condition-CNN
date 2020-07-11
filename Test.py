@@ -8,6 +8,7 @@ from tensorflow.keras.utils import get_file
 import sys
 from datetime import datetime
 from os import path
+import tensorflow.keras.backend as K
 
 arg_names = ['filename','model','filepath', 'batch']
 args = dict(zip(arg_names, sys.argv))
@@ -31,6 +32,7 @@ if(not exists):
           ('masterCategory Accuracy %', np.float64),
           ('subCategory Accuracy %', np.float64),
           ('articleType Accuracy %', np.float64),
+          ('Trainable params', np.float64),
           ('Timestamp', np.datetime64),
           ])
     #df = pd.DataFrame(columns=['Model','Weights Path', 'masterCategory Accuracy %','subCategory Accuracy %','articleType Accuracy %','Timestamp'])
@@ -38,7 +40,7 @@ if(not exists):
     df = pd.DataFrame(data)
 else:
     types = {'Model':str,'Weights Path': str, 'masterCategory Accuracy %': np.float64, 'subCategory Accuracy %': np.float64,
-    'articleType Accuracy %': np.float64}
+    'articleType Accuracy %': np.float64, 'Trainable params': np.float64}
     df = pd.read_csv("stats.csv",dtype=types, parse_dates=['Timestamp'])
 
 
@@ -95,7 +97,7 @@ def test_multi(label, model):
     print(f"score is {score}")
     return score
 
-def test_articlType(label, model):
+def test_articleType(label, model):
     model.load_weights(weights_path, by_name=True)
     test_generator = test_datagen.flow_from_dataframe(
         dataframe=test_df,
@@ -104,7 +106,7 @@ def test_articlType(label, model):
         y_col='articleTypeOneHot',
         target_size=target_size,
         batch_size=batch,
-        class_mode='multi_output')
+        class_mode='categorical')
     STEP_SIZE_TEST=test_generator.n//test_generator.batch_size
     score = model.evaluate(x=test_generator,
         steps=STEP_SIZE_TEST)
@@ -121,7 +123,7 @@ def test_subCategory(label, model):
         y_col='subCategoryOneHot',
         target_size=target_size,
         batch_size=batch,
-        class_mode='multi_output')
+        class_mode='categorical')
     STEP_SIZE_TEST=test_generator.n//test_generator.batch_size
     score = model.evaluate(x=test_generator,
         steps=STEP_SIZE_TEST)
@@ -138,7 +140,7 @@ def test_masterCategory(label, model):
         y_col='masterCategoryOneHot',
         target_size=target_size,
         batch_size=batch,
-        class_mode='multi_output')
+        class_mode='categorical')
     STEP_SIZE_TEST=test_generator.n//test_generator.batch_size
     score = model.evaluate(x=test_generator,
         steps=STEP_SIZE_TEST)
@@ -147,31 +149,50 @@ def test_masterCategory(label, model):
     return score
 
 
+score = 0
+params = 0
+masterCategory_accuracy = np.nan
+subCategory_accuracy = np.nan
+articleType_accuracy = np.nan
+
 if(model_type == 'Recurrent'):
     from RecurrentBranching import RecurrentTest
     model = RecurrentTest().model
     score = test_multi(model_type, model)
+    params= np.sum([K.count_params(w) for w in model.trainable_weights])
+
 elif(model_type=='BCNN'):
     from BCNN import BCNN
     bcnn = BCNN(model_type)
     model = bcnn.model
-    cbks = bcnn.cbks
     score = test_multi(model_type, model)
-    print(type(score))
+    params= np.sum([K.count_params(w) for w in model.trainable_weights])
+
+    #score [0:4] are the losses for the branches
+    masterCategory_accuracy = score[4]
+    subCategory_accuracy = score[5]
+    articleType_accuracy = score[6]
+
 elif(model_type == 'articleType'):
     from articleType import ArticleType
     model = ArticleType().model
-    score = test_articlType(model_type, model)
+    score = test_articleType(model_type, model)
+    params= np.sum([K.count_params(w) for w in model.trainable_weights])
     print(type(score))
+
 elif(model_type == 'subCategory'):
     from subCategory import SubCategory
     model = SubCategory().model
     score = test_subCategory(model_type,model)
+    params= np.sum([K.count_params(w) for w in model.trainable_weights])
+
 else:
     #masterCategory
     from masterCategory import MasterCategory
     model = MasterCategory().model
     score = test_masterCategory(model_type, model)
+    params= np.sum([K.count_params(w) for w in model.trainable_weights])
+
     
-df.loc[df.index.max()+1] = ['Branching', weights_path, 0.68, 0.55, 0.33, np.datetime64('now')]
+df.loc[df.index.max()+1] = ['Branching', weights_path, 0.68, 0.55, 0.33, params,np.datetime64('now')]
 df.to_csv("../testing/test_results.csv", index=False)
