@@ -103,7 +103,7 @@ def test_articleType(label, model):
         dataframe=test_df,
         directory=direc,
         x_col="filepath",
-        y_col='articleTypeOneHot',
+        y_col='articleType',
         target_size=target_size,
         batch_size=batch,
         class_mode='categorical')
@@ -120,7 +120,7 @@ def test_subCategory(label, model):
         dataframe=test_df,
         directory=direc,
         x_col="filepath",
-        y_col='subCategoryOneHot',
+        y_col='subCategory',
         target_size=target_size,
         batch_size=batch,
         class_mode='categorical')
@@ -137,7 +137,7 @@ def test_masterCategory(label, model):
         dataframe=test_df,
         directory=direc,
         x_col="filepath",
-        y_col='masterCategoryOneHot',
+        y_col='masterCategory',
         target_size=target_size,
         batch_size=batch,
         class_mode='categorical')
