@@ -31,15 +31,15 @@ class LossWeightsModifier(tf.keras.callbacks.Callback):
         self.gamma = gamma
         # customize your behavior
     def on_epoch_end(self, epoch, logs={}):
-        if epoch == 13:
-            K.keras.set_value(self.alpha, 0.1)
+        if epoch == 5:
+            K.set_value(self.alpha, 0.1)
             K.set_value(self.beta, 0.8)
             K.set_value(self.gamma, 0.1)
-        if epoch == 23:
+        if epoch == 10:
             K.set_value(self.alpha, 0.1)
             K.set_value(self.beta, 0.2)
             K.set_value(self.gamma, 0.7)
-        if epoch == 33:
+        if epoch == 15:
             K.set_value(self.alpha, 0)
             K.set_value(self.beta, 0)
             K.set_value(self.gamma, 1)
@@ -145,7 +145,7 @@ class BCNN:
                                 metrics=['accuracy'])
         change_lr = LearningRateScheduler(scheduler)
         change_lw = LossWeightsModifier(alpha, beta, gamma)
-        checkpoint = ModelCheckpoint("../weights/"+label+"_{epoch:02d}_epochs_{val_loss:.2f}_val_loss.hdf5", monitor='val_loss', verbose=1,
+        checkpoint = ModelCheckpoint("../weights/"+label+"_{epoch:02d}_epochs_{val_loss:.2f}_val_loss.h5", monitor='val_loss', verbose=1,
             save_best_only=False, save_weights_only=True,mode='auto', period=5)
         self.cbks = [change_lr, change_lw,checkpoint]
         self.model = model

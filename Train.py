@@ -20,7 +20,7 @@ else:
 if(args.get('batch') is not None):
     batch = int(args['batch'])
 else:
-    batch = 64
+    batch = 128
 
 if(args.get('model') is not None):
     model_type=args['model']
