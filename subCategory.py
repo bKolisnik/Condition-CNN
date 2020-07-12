@@ -59,10 +59,10 @@ class SubCategory:
 
         #--- subCategory prediction---
         x = Flatten(name='flatten')(x)
-        x = Dense(256, activation='relu', name='fc_sub')(x)
+        x = Dense(1024, activation='relu', name='fc_sub')(x)
         x = BatchNormalization()(x)
         x = Dropout(0.5)(x)
-        x = Dense(256, activation='relu', name='fc2_sub')(x)
+        x = Dense(1024, activation='relu', name='fc2_sub')(x)
         x = BatchNormalization()(x)
         x = Dropout(0.5)(x)
         pred = Dense(self.sub_classes, activation='softmax', name='sub_output')(x)

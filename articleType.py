@@ -61,10 +61,10 @@ class ArticleType:
 
         #--- subCategory prediction---
         x = Flatten(name='flatten')(x)
-        x = Dense(256, activation='relu', name='fc_art')(x)
+        x = Dense(4096, activation='relu', name='fc_art')(x)
         x = BatchNormalization()(x)
         x = Dropout(0.5)(x)
-        x = Dense(256, activation='relu', name='fc2_art')(x)
+        x = Dense(4096, activation='relu', name='fc2_art')(x)
         x = BatchNormalization()(x)
         x = Dropout(0.5)(x)
         pred = Dense(self.art_classes, activation='softmax', name='art_output')(x)
