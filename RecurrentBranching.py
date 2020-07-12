@@ -250,7 +250,7 @@ class RecurrentTest:
         y = BatchNormalization()(y)
         y = Dropout(0.5)(y)
         preds_features = concatenate([y,c_2_pred,c_1_pred])
-        fine_pred = Dense(self.art_classes, activation='softmax', name='article_output')(x)
+        fine_pred = Dense(self.art_classes, activation='softmax', name='article_output')(preds_features)
 
         model = Model(
             inputs=[input_image],
