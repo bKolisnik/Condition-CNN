@@ -243,7 +243,7 @@ def train_baseline(label, model,cbks):
         # plot loss
         plt.plot(history.history['loss'])
         plt.plot(history.history['val_loss'])
-        plt.title('model loss')
+        plt.title('Model Loss')
         plt.ylabel('loss')
         plt.xlabel('epoch')
         plt.legend(['train', 'val'], loc='upper left')
