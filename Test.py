@@ -178,21 +178,22 @@ elif(model_type == 'articleType'):
     model = ArticleType().model
     score = test_articleType(model_type, model)
     params= np.sum([K.count_params(w) for w in model.trainable_weights])
-    print(type(score))
+    articleType_accuracy = score[1]
 
 elif(model_type == 'subCategory'):
     from subCategory import SubCategory
     model = SubCategory().model
     score = test_subCategory(model_type,model)
     params= np.sum([K.count_params(w) for w in model.trainable_weights])
-
+    subCategory_accuracy = score[1]
 else:
     #masterCategory
     from masterCategory import MasterCategory
     model = MasterCategory().model
     score = test_masterCategory(model_type, model)
     params= np.sum([K.count_params(w) for w in model.trainable_weights])
+    masterCategory_accuracy = score[1]
 
     
-df.loc[df.index.max()+1] = ['Branching', weights_path, 0.68, 0.55, 0.33, params,np.datetime64('now')]
+df.loc[df.index.max()+1] = [model_type, weights_path, masterCategory_accuracy, subCategory_accuracy, articleType_accuracy, params,np.datetime64('now')]
 df.to_csv("../testing/test_results.csv", index=False)
