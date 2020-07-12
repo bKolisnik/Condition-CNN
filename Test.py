@@ -41,7 +41,7 @@ if(not exists):
 else:
     types = {'Model':str,'Weights Path': str, 'masterCategory Accuracy %': np.float64, 'subCategory Accuracy %': np.float64,
     'articleType Accuracy %': np.float64, 'Trainable params': np.float64}
-    df = pd.read_csv("stats.csv",dtype=types, parse_dates=['Timestamp'])
+    df = pd.read_csv("../testing/test_results.csv",dtype=types, parse_dates=['Timestamp'])
 
 
 
