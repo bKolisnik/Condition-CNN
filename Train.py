@@ -153,7 +153,7 @@ def train_BCNN(label, model, cbks):
     model.save_weights("../weights/"+label+"_"+str(epochs)+"_epochs_"+TODAY+".h5")
 
 
-def train_recurrent(label, model):
+def train_recurrent(label, model,cbks):
     model.load_weights(weights_path, by_name=True)
     train = train_datagen.flow_from_dataframe(
         dataframe=train_df,
@@ -181,7 +181,8 @@ def train_recurrent(label, model):
                             epochs=epochs,
                             validation_data=val_generator,
                             steps_per_epoch=STEP_SIZE_TRAIN,
-                            validation_steps=STEP_SIZE_VALID)
+                            validation_steps=STEP_SIZE_VALID,
+                            callbacks=cbks)
         print("Finished training")
         #Save training as csv
         pd.DataFrame.from_dict(history.history).to_csv("../history/"+label+"_"+str(epochs)+"_epochs_"+TODAY+'.csv',index=False)
@@ -206,7 +207,7 @@ def train_recurrent(label, model):
     model.save_weights("../weights/"+label+"_"+str(epochs)+"_epochs_"+TODAY+".h5")     
 #def BCNN_train():
 
-def train_baseline(label, model):
+def train_baseline(label, model,cbks):
     model.load_weights(weights_path, by_name=True)
     '''label is masterCategory, subCategory, or, articleType'''
     y = label
@@ -233,7 +234,8 @@ def train_baseline(label, model):
                             steps_per_epoch=STEP_SIZE_TRAIN,
                             epochs=epochs,
                             validation_data=val_generator,
-                            validation_steps=STEP_SIZE_VALID)
+                            validation_steps=STEP_SIZE_VALID,
+                            callbacks=cbks)
         print("Finished training")
         #Save training as csv
         pd.DataFrame.from_dict(history.history).to_csv("../history/"+label+"_"+str(epochs)+"_epochs_"+TODAY+'.csv',index=False)
@@ -257,8 +259,10 @@ def train_baseline(label, model):
 
 if(model_type == 'Recurrent'):
     from RecurrentBranching import RecurrentTrain
-    model = RecurrentTrain().model
-    train_recurrent(model_type, model)
+    recurrent = RecurrentTrain(model_type)
+    model = recurrent.model
+    cbks = recurrent.cbks
+    train_recurrent(model_type, model, cbks)
 elif(model_type=='BCNN'):
     from BCNN import BCNN
     bcnn = BCNN(model_type)
@@ -267,16 +271,22 @@ elif(model_type=='BCNN'):
     train_BCNN(model_type, model, cbks)
 elif(model_type == 'articleType'):
     from articleType import ArticleType
-    model = ArticleType().model
-    train_baseline(model_type, model)
+    articletype = ArticleType(model_type)
+    model = articletype.model
+    cbks = articletype.cbks
+    train_baseline(model_type, model, cbks)
 elif(model_type == 'subCategory'):
     from subCategory import SubCategory
-    model = SubCategory().model
-    train_baseline(model_type,model)
+    subcategory = SubCategory(model_type)
+    model = subcategory.model
+    cbks = subcategory.cbks
+    train_baseline(model_type,model,cbks)
 else:
     #masterCategory
     from masterCategory import MasterCategory
-    model = MasterCategory().model
-    train_baseline(model_type, model)
+    mastercategory = MasterCategory(model_type)
+    model = mastercategory.model
+    cbks = mastercategory.cbks
+    train_baseline(model_type, model,cbks)
     
 

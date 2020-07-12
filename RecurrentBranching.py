@@ -8,6 +8,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import SGD
 import numpy as np
 import tensorflow.keras.backend as K
+from tensorflow.keras.callbacks import Callback, ModelCheckpoint
 import sys
 
 #This new arrangement is designed to look as similar as possible to the B-CNN model
@@ -16,7 +17,7 @@ import sys
 class RecurrentTrain:
     '''This model is based off of VGG16 with the addition of BatchNorm layers and then branching '''
 
-    def __init__(self):
+    def __init__(self,label):
         self.master_classes=4
         self.sub_classes=21
         self.art_classes=45
@@ -145,12 +146,15 @@ class RecurrentTrain:
         model.compile(optimizer=SGD(lr=0.001, momentum=0.9), loss=losses,
                       metrics=['categorical_accuracy'])
 
+        checkpoint = ModelCheckpoint("../weights/"+label+"_{epoch:02d}_epochs_{val_loss:.2f}_val_loss.h5", monitor='val_loss', verbose=1,
+            save_best_only=False, save_weights_only=True,mode='auto', period=5)
+        self.cbks = [checkpoint]
         self.model = model
 
 class RecurrentTest:
     '''One parameter model which is a keras model'''
 
-    def __init__(self):
+    def __init__(self,label):
 
         self.master_classes=4
         self.sub_classes=21

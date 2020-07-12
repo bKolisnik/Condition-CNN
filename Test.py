@@ -157,7 +157,7 @@ articleType_accuracy = np.nan
 
 if(model_type == 'Recurrent'):
     from RecurrentBranching import RecurrentTest
-    model = RecurrentTest().model
+    model = RecurrentTest(model_type).model
     score = test_multi(model_type, model)
     params= np.sum([K.count_params(w) for w in model.trainable_weights])
 
@@ -175,21 +175,21 @@ elif(model_type=='BCNN'):
 
 elif(model_type == 'articleType'):
     from articleType import ArticleType
-    model = ArticleType().model
+    model = ArticleType(model_type).model
     score = test_articleType(model_type, model)
     params= np.sum([K.count_params(w) for w in model.trainable_weights])
     articleType_accuracy = score[1]
 
 elif(model_type == 'subCategory'):
     from subCategory import SubCategory
-    model = SubCategory().model
+    model = SubCategory(model_type).model
     score = test_subCategory(model_type,model)
     params= np.sum([K.count_params(w) for w in model.trainable_weights])
     subCategory_accuracy = score[1]
 else:
     #masterCategory
     from masterCategory import MasterCategory
-    model = MasterCategory().model
+    model = MasterCategory(model_type).model
     score = test_masterCategory(model_type, model)
     params= np.sum([K.count_params(w) for w in model.trainable_weights])
     masterCategory_accuracy = score[1]
