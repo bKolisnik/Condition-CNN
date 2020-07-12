@@ -271,8 +271,3 @@ class RecurrentTest:
                       metrics=['categorical_accuracy'])
 
         self.model = model
-
-if __name__ == "__main__":
-
-    model = RecurrentTrain().model
-    print(model.summary())
