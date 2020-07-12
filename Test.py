@@ -160,6 +160,9 @@ if(model_type == 'Recurrent'):
     model = RecurrentTest(model_type).model
     score = test_multi(model_type, model)
     params= np.sum([K.count_params(w) for w in model.trainable_weights])
+    masterCategory_accuracy = score[4]
+    subCategory_accuracy = score[5]
+    articleType_accuracy = score[6]
 
 elif(model_type=='BCNN'):
     from BCNN import BCNN
