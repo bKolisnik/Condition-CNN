@@ -146,7 +146,7 @@ class BCNN:
         change_lr = LearningRateScheduler(scheduler)
         change_lw = LossWeightsModifier(alpha, beta, gamma)
         checkpoint = ModelCheckpoint("../weights/"+label+"_{epoch:02d}_epochs_{val_loss:.2f}_val_loss.h5", monitor='val_loss', verbose=1,
-            save_best_only=False, save_weights_only=True,mode='auto', period=5)
+            save_best_only=True, save_weights_only=True,mode='auto')
         self.cbks = [change_lr, change_lw,checkpoint]
         self.model = model
 
