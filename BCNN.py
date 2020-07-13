@@ -13,8 +13,8 @@ import tensorflow.keras.backend as K
 import sys
 from tensorflow.keras.callbacks import ModelCheckpoint
 
-
-
+from datetime import datetime
+TODAY = str(datetime.date(datetime.now()))
 
 def scheduler(epoch):
     learning_rate_init = 0.001
@@ -145,7 +145,8 @@ class BCNN:
                                 metrics=['accuracy'])
         change_lr = LearningRateScheduler(scheduler)
         change_lw = LossWeightsModifier(alpha, beta, gamma)
-        checkpoint = ModelCheckpoint("../weights/"+label+"_{epoch:02d}_epochs_{val_loss:.2f}_val_loss.h5", monitor='val_loss', verbose=1,
+
+        checkpoint = ModelCheckpoint("../weights/"+label+"_"+TODAY+"_best_weights.h5", monitor='val_loss', verbose=1,
             save_best_only=True, save_weights_only=True,mode='auto')
         self.cbks = [change_lr, change_lw,checkpoint]
         self.model = model

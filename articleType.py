@@ -80,7 +80,7 @@ class ArticleType:
         #Keras will automaticall use categorical accuracy when accuracy is used.
         model.compile(optimizer=SGD(lr=0.001, momentum=0.9), loss='categorical_crossentropy', metrics=['categorical_accuracy'])
 
-        checkpoint = ModelCheckpoint("../weights/"+label+"_{epoch:02d}_epochs_{val_loss:.2f}_val_loss.h5", monitor='val_loss', verbose=1,
+        checkpoint = ModelCheckpoint("../weights/"+label+"_best_weights.h5", monitor='val_loss', verbose=1,
             save_best_only=True, save_weights_only=True,mode='auto')
         self.cbks = [checkpoint]
         self.model = model
