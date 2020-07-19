@@ -122,7 +122,7 @@ class ConditionTrain:
         preds_features = Add()([c_1_condition,c_2_raw])
 
         #c_2_pred = Dense(self.sub_classes, activation='softmax', name='sub_output')(preds_features)
-        c_2_pred = Softmax()(preds_features)
+        c_2_pred = Softmax(name='sub_output')(preds_features)
 
 
         #--- block 5 articleType ---
@@ -147,8 +147,7 @@ class ConditionTrain:
         c_2_condition = Dense(self.sub_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),name='c_2_condition')(input_sub)
         c_3_raw = Dense(self.sub_classes, activation='relu', name='c_3_raw')(y)
         preds_features = Add()([c_2_condition,c_3_raw])
-
-        fine_pred = Dense(self.art_classes, activation='softmax', name='article_output')(preds_features)
+        fine_pred = Softmax(name='article_output')(preds_features)
 
         # Model to be trained
         #modelC = Model(inputs=[input_image,input_master,input_sub], outputs=z)
