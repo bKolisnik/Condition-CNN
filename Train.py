@@ -263,6 +263,12 @@ if(model_type == 'Recurrent'):
     model = recurrent.model
     cbks = recurrent.cbks
     train_recurrent(model_type, model, cbks)
+elif(model_type=='Condition'):
+    from ConditionCNN import ConditionTrain
+    condition = ConditionTrain(model_type)
+    model = condition.model
+    cbks = condition.cbks
+    train_recurrent(model_type,model,cbks)
 elif(model_type=='BCNN'):
     from BCNN import BCNN
     bcnn = BCNN(model_type)
