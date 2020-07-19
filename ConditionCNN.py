@@ -116,7 +116,7 @@ class ConditionTrain:
         c_2_bch = BatchNormalization()(c_2_bch)
         c_2_bch = Dropout(0.5)(c_2_bch)
 
-        #--- masterCategory conditioning branch ---
+        #--- masterCategory conditioning for subCategory branch ---
         c_1_condition = Dense(self.sub_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),name='c_1_condition')(input_master)
         c_2_raw = Dense(self.sub_classes, activation='relu', name='c_2_raw')(c_2_bch)
         preds_features = Add()([c_1_condition,c_2_raw])
@@ -143,9 +143,9 @@ class ConditionTrain:
         y = Dropout(0.5)(y)
         #preds_features = concatenate([y,input_sub,input_master])
 
-        #--- masterCategory conditioning branch ---
-        c_2_condition = Dense(self.sub_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),name='c_2_condition')(input_sub)
-        c_3_raw = Dense(self.sub_classes, activation='relu', name='c_3_raw')(y)
+        #--- subCategory conditioning  for articleType branch ---
+        c_2_condition = Dense(self.art_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),name='c_2_condition')(input_sub)
+        c_3_raw = Dense(self.art_classes, activation='relu', name='c_3_raw')(y)
         preds_features = Add()([c_2_condition,c_3_raw])
         fine_pred = Softmax(name='article_output')(preds_features)
 
