@@ -164,6 +164,7 @@ if(model_type == 'Recurrent'):
     subCategory_accuracy = score[5]
     articleType_accuracy = score[6]
 elif(model_type == 'Condition'):
+    print("Condition")
     from ConditionCNN import ConditionTest
     model = ConditionTest(model_type).model
     score = test_multi(model_type, model)
@@ -171,7 +172,6 @@ elif(model_type == 'Condition'):
     masterCategory_accuracy = score[4]
     subCategory_accuracy = score[5]
     articleType_accuracy = score[6]
-    
 elif(model_type=='BCNN'):
     from BCNN import BCNN
     bcnn = BCNN(model_type)
