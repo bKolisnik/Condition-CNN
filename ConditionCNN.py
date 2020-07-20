@@ -11,6 +11,7 @@ import numpy as np
 from tensorflow.python.ops import math_ops
 import tensorflow.keras.backend as K
 from tensorflow.keras.callbacks import Callback, ModelCheckpoint
+from tensorflow.keras.initializers import Zeros()
 from tensorflow.keras.layers import Lambda
 import sys
 
@@ -262,7 +263,7 @@ class ConditionTest:
         c_2_bch = Dropout(0.5)(c_2_bch)
 
         #--- masterCategory conditioning for subCategory branch ---
-        c_1_condition = Dense(self.sub_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),name='c_1_condition')(c_1_pred)
+        c_1_condition = Dense(self.sub_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),kernel_initializer=Zeros(),name='c_1_condition')(c_1_pred)
         c_2_raw = Dense(self.sub_classes, activation='relu', name='c_2_raw')(c_2_bch)
         preds_features = Add()([c_1_condition,c_2_raw])
         c_2_pred = Softmax(name='sub_output')(preds_features)
@@ -285,7 +286,7 @@ class ConditionTest:
         y = Dropout(0.5)(y)
 
         #--- subCategory conditioning  for articleType branch ---
-        c_2_condition = Dense(self.art_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),name='c_2_condition')(c_2_pred)
+        c_2_condition = Dense(self.art_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),kernel_initializer=Zeros(),name='c_2_condition')(c_2_pred)
         c_3_raw = Dense(self.art_classes, activation='relu', name='c_3_raw')(y)
         preds_features = Add()([c_2_condition,c_3_raw])
         fine_pred = Softmax(name='article_output')(preds_features)
@@ -293,7 +294,7 @@ class ConditionTest:
         model = Model(
             inputs=[input_image],
             outputs=[c_1_pred, c_2_pred, fine_pred],
-            name="Branching_CNN")
+            name="Condition_CNN")
 
         losses = {
             "master_output": "categorical_crossentropy",
