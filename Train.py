@@ -271,7 +271,7 @@ elif(model_type=='Condition'):
     train_recurrent(model_type,model,cbks)
 elif(model_type=='ConditionPlus'):
     from ConditionCNNPlus import ConditionPlusTrain
-    condition = ConditionTrainPlus(model_type)
+    condition = ConditionPlusTrain(model_type)
     model = condition.model
     cbks = condition.cbks
     train_recurrent(model_type,model,cbks)
