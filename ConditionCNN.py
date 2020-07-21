@@ -11,7 +11,7 @@ import numpy as np
 from tensorflow.python.ops import math_ops
 import tensorflow.keras.backend as K
 from tensorflow.keras.callbacks import Callback, ModelCheckpoint
-from tensorflow.keras.initializers import Zeros()
+from tensorflow.keras.initializers import Zeros
 from tensorflow.keras.layers import Lambda
 import sys
 
@@ -118,7 +118,7 @@ class ConditionTrain:
         c_2_bch = Dropout(0.5)(c_2_bch)
 
         #--- masterCategory conditioning for subCategory branch ---
-        c_1_condition = Dense(self.sub_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),name='c_1_condition')(input_master)
+        c_1_condition = Dense(self.sub_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),kernel_initializer=Zeros(),name='c_1_condition')(input_master)
         c_2_raw = Dense(self.sub_classes, activation='relu', name='c_2_raw')(c_2_bch)
         preds_features = Add()([c_1_condition,c_2_raw])
 
@@ -145,7 +145,7 @@ class ConditionTrain:
         #preds_features = concatenate([y,input_sub,input_master])
 
         #--- subCategory conditioning  for articleType branch ---
-        c_2_condition = Dense(self.art_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),name='c_2_condition')(input_sub)
+        c_2_condition = Dense(self.art_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),kernel_initializer=Zeros(),name='c_2_condition')(input_sub)
         c_3_raw = Dense(self.art_classes, activation='relu', name='c_3_raw')(y)
         preds_features = Add()([c_2_condition,c_3_raw])
         fine_pred = Softmax(name='article_output')(preds_features)
