@@ -164,9 +164,16 @@ if(model_type == 'Recurrent'):
     subCategory_accuracy = score[5]
     articleType_accuracy = score[6]
 elif(model_type == 'Condition'):
-    print("Condition")
     from ConditionCNN import ConditionTest
     model = ConditionTest(model_type).model
+    score = test_multi(model_type, model)
+    params= np.sum([K.count_params(w) for w in model.trainable_weights])
+    masterCategory_accuracy = score[4]
+    subCategory_accuracy = score[5]
+    articleType_accuracy = score[6]
+elif(model_type == 'ConditionPlus'):
+    from ConditionPlusCNN import ConditionPlusTest
+    model = ConditionPlusTest(model_type).model
     score = test_multi(model_type, model)
     params= np.sum([K.count_params(w) for w in model.trainable_weights])
     masterCategory_accuracy = score[4]
