@@ -263,7 +263,7 @@ class ConditionTest:
         c_2_bch = Dropout(0.5)(c_2_bch)
 
         #--- masterCategory conditioning for subCategory branch ---
-        c_1_condition = Dense(self.sub_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),kernel_initializer=Zeros(),name='c_1_condition')(c_1_pred)
+        c_1_condition = Dense(self.sub_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),name='c_1_condition')(c_1_pred)
         c_2_raw = Dense(self.sub_classes, activation='relu', name='c_2_raw')(c_2_bch)
         preds_features = Add()([c_1_condition,c_2_raw])
         c_2_pred = Softmax(name='sub_output')(preds_features)
@@ -286,7 +286,7 @@ class ConditionTest:
         y = Dropout(0.5)(y)
 
         #--- subCategory conditioning  for articleType branch ---
-        c_2_condition = Dense(self.art_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),kernel_initializer=Zeros(),name='c_2_condition')(c_2_pred)
+        c_2_condition = Dense(self.art_classes, activation=None, use_bias=False, kernel_constraint=NonNegUnitNorm(),name='c_2_condition')(c_2_pred)
         c_3_raw = Dense(self.art_classes, activation='relu', name='c_3_raw')(y)
         preds_features = Add()([c_2_condition,c_3_raw])
         fine_pred = Softmax(name='article_output')(preds_features)
