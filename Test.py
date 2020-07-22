@@ -172,7 +172,7 @@ elif(model_type == 'Condition'):
     subCategory_accuracy = score[5]
     articleType_accuracy = score[6]
 elif(model_type == 'ConditionPlus'):
-    from ConditionPlusCNN import ConditionPlusTest
+    from ConditionCNNPlus import ConditionPlusTest
     model = ConditionPlusTest(model_type).model
     score = test_multi(model_type, model)
     params= np.sum([K.count_params(w) for w in model.trainable_weights])
